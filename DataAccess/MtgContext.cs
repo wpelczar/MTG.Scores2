@@ -5,6 +5,8 @@ namespace MTG.Scores2.DataAccess
 {
   public class MtgContext : DbContext
   {
+    public MtgContext(DbContextOptions<MtgContext> dbContextOptions) : base(dbContextOptions) { }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
