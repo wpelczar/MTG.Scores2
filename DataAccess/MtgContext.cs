@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MTG.Scores2.Extensions;
 using MTG.Scores2.Models;
 
 namespace MTG.Scores2.DataAccess
@@ -9,7 +10,7 @@ namespace MTG.Scores2.DataAccess
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+      modelBuilder.RemovePluralizingTableNameConvention();
 
       base.OnModelCreating(modelBuilder);
     }
