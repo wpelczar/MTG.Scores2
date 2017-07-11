@@ -33,11 +33,17 @@ namespace MTG_Scores2
       // Add framework services.
       services.AddMvc();
 
-      services.AddDbContext<MtgContext>(o => o.UseSqlServer("ConnString"));
+      services.AddDbContext<MtgContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MtgDatabase")));
+
+      services.AddTransient<MtgContextSeedData>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+    public void Configure(
+      IApplicationBuilder app,
+      IHostingEnvironment env, 
+      ILoggerFactory loggerFactory,
+      MtgContextSeedData seeder)
     {
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddDebug();
@@ -49,6 +55,7 @@ namespace MTG_Scores2
         {
           HotModuleReplacement = true
         });
+        seeder.Seed().Wait();
       }
       else
       {
