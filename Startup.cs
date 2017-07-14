@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MTG.Scores2.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace MTG_Scores2
 {
@@ -36,6 +37,8 @@ namespace MTG_Scores2
       services.AddDbContext<MtgContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MtgDatabase")));
 
       services.AddTransient<MtgContextSeedData>();
+
+      services.AddAutoMapper();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
