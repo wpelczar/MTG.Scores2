@@ -32,7 +32,9 @@ namespace MTG_Scores2
     public void ConfigureServices(IServiceCollection services)
     {
       // Add framework services.
-      services.AddMvc();
+      services.AddMvc()
+        .AddJsonOptions(opt => 
+          opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore);
 
       services.AddDbContext<MtgContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MtgDatabase")));
 
