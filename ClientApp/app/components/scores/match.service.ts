@@ -21,6 +21,12 @@ export class MatchService {
       .catch(this.handleError);
   }
 
+  deleteMatch(id): Observable<any> {
+    return this._http.delete(this._matchUrl + '/' + id)
+    .do(data => console.log(JSON.stringify(data)))
+    .catch(this.handleError);
+  }
+
   private handleError(error: Response){
     console.error(error);
     return Observable.throw(error.json().error || 'Server error')

@@ -18,15 +18,19 @@ export class ScoresComponent implements OnInit {
     ngOnInit(): void {
         this._matchService.getMatches()
             .subscribe(matches => this.matches = matches,
-            error => this.errorMessage = <any>error);
+                error => this.errorMessage = <any>error);
     }
 
-    edit(): void {
-        console.log('EDITED!!!');
+    edit(id: number): void {
+        console.log('EDITED!!!' + id);
     }
 
-    delete(): void {
-        console.log('DELETED!!!');
-
+    delete(id: number): void {     
+        this._matchService.deleteMatch(id)
+        .subscribe(data =>{
+          console.log('OK. ' + data);
+          this.matches = this.matches.filter(m => m.id != id);  
+        }, 
+            error => console.log('ERROR. ', error));
     }
 }

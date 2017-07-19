@@ -20,8 +20,8 @@
     <td>{{match.player1.score}} : {{match.player2.score}}</td>
     <td>{{match.player2.name}}</td>
     <td>
-      <button (click)="edit()" class="btn btn-default"><i class="fa fa-lg fa-pencil-square-o"></i></button>
-      <button (click)="delete()" class="btn btn-default"><i class="fa fa-lg fa-times"></i></button>
+      <button (click)="edit(match.id)" class="btn btn-default"><i class="fa fa-lg fa-pencil-square-o"></i></button>
+      <button (click)="delete(match.id)" class="btn btn-default"><i class="fa fa-lg fa-times"></i></button>
     </td>
   </tr>
 </tbody>
