@@ -40,6 +40,8 @@ namespace MTG_Scores2
 
       services.AddTransient<MtgContextSeedData>();
 
+      services.AddTransient<IPlayerRepository, PlayerRepository>();
+
       services.AddAutoMapper();
     }
 

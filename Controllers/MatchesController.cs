@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 namespace MTG.Scores2.Controllers
 {
   [Route("api/matches")]
-  public class ScoresController : Controller
+  public class MatchesController : Controller
   {
     private MtgContext _db;
     private IMapper _mapper;
 
-    public ScoresController(MtgContext db, IMapper mapper)
+    public MatchesController(MtgContext db, IMapper mapper)
     {
       _db = db;
       _mapper = mapper;
