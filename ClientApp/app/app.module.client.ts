@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { sharedConfig } from './app.module.shared';
 import { MatchService } from './components/scores/match.service';
+import { PlayerService } from './components/scores/player.service';
 
 @NgModule({
     bootstrap: sharedConfig.bootstrap,
@@ -16,6 +17,7 @@ import { MatchService } from './components/scores/match.service';
     ],
     providers: [
         MatchService,
+        PlayerService,
         { provide: 'ORIGIN_URL', useValue: location.origin }
     ]
 })

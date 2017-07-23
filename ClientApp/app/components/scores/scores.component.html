@@ -5,6 +5,13 @@
     </a>
 </div>
 
+<div *ngIf = "players && players.length">
+  <select [(ngModel)]="selectedPlayer">
+    <option [ngValue]="null" selected="selected">Wszyscy gracze</option>
+    <option *ngFor="let player of players" [ngValue]="player">{{player.name}}</option>
+  </select>
+</div>
+
 <table class="table" *ngIf="matches && matches.length">
   <thead>
     <tr>
@@ -15,7 +22,7 @@
     </tr>
   </thead>
 <tbody>
-  <tr *ngFor="let match of matches">
+  <tr *ngFor="let match of matches | matchFilterByPlayer : selectedPlayer">
     <td>{{match.player1.name}}</td>
     <td>{{match.player1.score}} : {{match.player2.score}}</td>
     <td>{{match.player2.name}}</td>

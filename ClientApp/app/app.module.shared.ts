@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { ScoresComponent } from './components/scores/scores.component';
+import { MatchFilterByPlayerPipe } from './components/scores/match-filter-by-player.pipe';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -16,7 +17,8 @@ export const sharedConfig: NgModule = {
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        ScoresComponent
+        ScoresComponent,
+        MatchFilterByPlayerPipe
     ],
     imports: [
         RouterModule.forRoot([
