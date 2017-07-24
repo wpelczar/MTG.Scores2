@@ -26,7 +26,7 @@ namespace MTG.Scores2.Controllers
     {
       try
       {
-        var players = await _playerRepository.GetAllPlayers();
+        var players = await _playerRepository.GetAllPlayers(false);
         var playersModel = _mapper.Map<IEnumerable<PlayerViewModel>>(players);
 
         return Ok(playersModel);

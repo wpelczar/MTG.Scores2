@@ -20,9 +20,11 @@ namespace MTG.Scores2.DataAccess
       return _context.Players.Where(p => p.ID == id).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Player>> GetAllPlayers()
+    public async Task<IEnumerable<Player>> GetAllPlayers(bool includeMatches)
     {
-      return await _context.Players.ToListAsync();
+      return includeMatches
+        ? await _context.Players.Include(p => p.HomeMatches).Include(p => p.AwayMatches).ToListAsync()
+        : await _context.Players.ToListAsync();
     }
   }
 }

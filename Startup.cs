@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MTG.Scores2.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using MTG.Scores2.Services;
 
 namespace MTG_Scores2
 {
@@ -38,6 +39,9 @@ namespace MTG_Scores2
 
       services.AddTransient<IPlayerRepository, PlayerRepository>()
               .AddTransient<IMatchRepository, MatchRepository>();
+
+      services.AddTransient<IRankingProvider, RankingProvider>();
+
 
       services.AddAutoMapper();
     }

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MTG.Scores2.Models
 {
@@ -19,8 +20,10 @@ namespace MTG.Scores2.Models
     [Range(0, 2)]
     public int Player2Score { get; set; }
 
+    [InverseProperty("HomeMatches")]
     public virtual Player Player1 { get; set; }
 
+    [InverseProperty("AwayMatches")]
     public virtual Player Player2 { get; set; }
   }
 }
