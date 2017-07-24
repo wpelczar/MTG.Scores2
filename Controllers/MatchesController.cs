@@ -15,12 +15,12 @@ namespace MTG.Scores2.Controllers
   [Route("api/matches")]
   public class MatchesController : Controller
   {
-    private MtgContext _db;
     private IMapper _mapper;
+    private IMatchRepository _matchRepository;
 
-    public MatchesController(MtgContext db, IMapper mapper)
+    public MatchesController(IMatchRepository matchRepository, IMapper mapper)
     {
-      _db = db;
+      _matchRepository = matchRepository;
       _mapper = mapper;
     }
 
@@ -29,7 +29,7 @@ namespace MTG.Scores2.Controllers
     {
       try
       {
-        var matches = await _db.Matches.Include(m => m.Player1).Include(m => m.Player2).ToListAsync();
+        var matches = await _matchRepository.GetAllMatches();
 
         var matchesModels = _mapper.Map<IEnumerable<MatchViewModel>>(matches);
 
@@ -47,7 +47,7 @@ namespace MTG.Scores2.Controllers
     {
       try
       {
-        var match = await _db.Matches.Where(m => m.ID == id).Include(m => m.Player1).Include(m => m.Player2).FirstOrDefaultAsync();
+        var match = await _matchRepository.GetMatchById(id);
 
         if (match == null)
         {
@@ -70,8 +70,8 @@ namespace MTG.Scores2.Controllers
       try
       {
         var match = _mapper.Map<Match>(matchModel);
-        _db.Matches.Add(match);
-        await _db.SaveChangesAsync();
+        _matchRepository.Add(match);
+        await _matchRepository.SaveAllAsync();
 
         var newUri = Url.Link("MatchGet", new { id = match.ID });
 
@@ -89,15 +89,15 @@ namespace MTG.Scores2.Controllers
     {
       try
       {
-        var match = await _db.Matches.Where(m => m.ID == id).FirstOrDefaultAsync();
+        var match = await _matchRepository.GetMatchById(id);
 
         if (match == null)
         {
           return NotFound();
         }
 
-        _db.Remove(match);
-        await _db.SaveChangesAsync();
+        _matchRepository.Delete(match);
+        await _matchRepository.SaveAllAsync();
 
         return Ok();
 

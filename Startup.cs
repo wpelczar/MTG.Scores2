@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -40,7 +36,8 @@ namespace MTG_Scores2
 
       services.AddTransient<MtgContextSeedData>();
 
-      services.AddTransient<IPlayerRepository, PlayerRepository>();
+      services.AddTransient<IPlayerRepository, PlayerRepository>()
+              .AddTransient<IMatchRepository, MatchRepository>();
 
       services.AddAutoMapper();
     }
