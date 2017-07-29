@@ -1,0 +1,28 @@
+<h1>This is RANKING!!!!!</h1>
+
+<div class="row" *ngIf="ranking && ranking.length">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Gracz</th>
+        <th>Mecze</th>
+        <th>Wygrane</th>
+        <th>Przegrane</th>
+        <th>Partie wygrane</th>
+        <th>Partie przegrane</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rankingRecord of ranking; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{rankingRecord.name}}</td>
+        <td class="important-stat">{{rankingRecord.matches}}</td>
+        <td class="important-stat">{{rankingRecord.wonMatches}}</td>
+        <td class="important-stat">{{rankingRecord.lostMatches}}</td>
+        <td>{{rankingRecord.wonPoints}}</td>
+        <td>{{rankingRecord.lostPoints}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

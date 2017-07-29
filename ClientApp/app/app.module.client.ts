@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { sharedConfig } from './app.module.shared';
 import { MatchService } from './components/scores/match.service';
 import { PlayerService } from './components/scores/player.service';
+import { RankingService } from './components/ranking/ranking.service';
 
 @NgModule({
     bootstrap: sharedConfig.bootstrap,
@@ -18,6 +19,7 @@ import { PlayerService } from './components/scores/player.service';
     providers: [
         MatchService,
         PlayerService,
+        RankingService,
         { provide: 'ORIGIN_URL', useValue: location.origin }
     ]
 })
