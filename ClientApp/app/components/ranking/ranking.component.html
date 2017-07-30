@@ -1,5 +1,9 @@
 <h1>This is RANKING!!!!!</h1>
 
+<div *ngIf="!ranking">
+  Loading...
+</div>
+
 <div class="row" *ngIf="ranking && ranking.length">
   <table class="table table-hover">
     <thead>

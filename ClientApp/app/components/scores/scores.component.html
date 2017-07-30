@@ -5,8 +5,12 @@
     </a>
 </div>
 
+<div *ngIf="!players || !matches">
+  Loading...
+</div>
+
 <div *ngIf = "players && players.length">
-  <select [(ngModel)]="selectedPlayer">
+  <select [(ngModel)]="selectedPlayer" class="btn btn-default">
     <option [ngValue]="null" selected="selected">Wszyscy gracze</option>
     <option *ngFor="let player of players" [ngValue]="player">{{player.name}}</option>
   </select>
