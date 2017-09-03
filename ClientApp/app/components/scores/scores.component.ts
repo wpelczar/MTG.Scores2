@@ -4,6 +4,8 @@ import { IMatch } from './match';
 import { MatchService } from './match.service';
 import { IPlayer } from './player';
 import { PlayerService } from './player.service';
+import { AddMatchDialogComponent } from './add-match-dialog.component';
+import { MdDialog } from '@angular/material';
 
 @Component({
     selector: 'scores',
@@ -16,15 +18,16 @@ export class ScoresComponent implements OnInit {
     selectedPlayer: IPlayer = null;
     errorMessage: string;
 
-    constructor(private _matchService: MatchService, 
-                private _playerServise: PlayerService) {
+    constructor(private _matchService: MatchService,
+                private _playerServise: PlayerService,
+                public _addMatchDialog: MdDialog) {
     }
 
     ngOnInit(): void {
         this._matchService.getMatches()
             .subscribe(matches => this.matches = matches,
                 error => this.errorMessage = <any>error);
-        
+
         this._playerServise.getPlayers()
             .subscribe(players => this.players = players,
                 error => this.errorMessage = <any>error)
@@ -34,12 +37,16 @@ export class ScoresComponent implements OnInit {
         console.log('EDITED!!!' + id);
     }
 
-    delete(id: number): void {     
+    delete(id: number): void {
         this._matchService.deleteMatch(id)
-        .subscribe(data =>{
+        .subscribe(data => {
           console.log('OK. ' + data);
-          this.matches = this.matches.filter(m => m.id != id);  
-        }, 
+          this.matches = this.matches.filter(m => m.id !== id);
+        },
             error => console.log('ERROR. ', error));
+    }
+
+    openAddMatchDialog(): void {
+        let dialogRef = this._addMatchDialog.open(AddMatchDialogComponent)
     }
 }

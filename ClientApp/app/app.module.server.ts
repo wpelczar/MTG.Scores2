@@ -5,11 +5,13 @@ import { MatchService } from './components/scores/match.service';
 import { PlayerService } from './components/scores/player.service';
 import { FormsModule } from '@angular/forms';
 import { RankingService } from './components/ranking/ranking.service';
+import { MdDialogModule } from '@angular/material';
+
 
 @NgModule({
     bootstrap: sharedConfig.bootstrap,
     declarations: sharedConfig.declarations,
-    providers:[
+    providers: [
         MatchService,
         PlayerService,
         RankingService
@@ -17,6 +19,7 @@ import { RankingService } from './components/ranking/ranking.service';
     imports: [
         FormsModule,
         ServerModule,
+        MdDialogModule,
         ...sharedConfig.imports
     ]
 })

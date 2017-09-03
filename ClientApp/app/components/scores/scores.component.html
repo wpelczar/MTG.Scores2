@@ -1,8 +1,8 @@
 <div class="jumbotron">
-  <a href="www.create.pl" class="btn btn-lg btn-success">
+  <button (click)="openAddMatchDialog()" class="btn btn-lg btn-success">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       Dodaj mecz
-    </a>
+    </button>
 </div>
 
 <div *ngIf="!players || !matches">
