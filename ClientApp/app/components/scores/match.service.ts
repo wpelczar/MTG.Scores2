@@ -10,7 +10,7 @@ import { IMatch } from './match';
 export class MatchService {
   private _matchUrl;
 
-  constructor(private _http: Http, @Inject('ORIGIN_URL') originUrl: string) { 
+  constructor(private _http: Http, @Inject('ORIGIN_URL') originUrl: string) {
     this._matchUrl = originUrl + '/api/matches'
   }
 
@@ -23,6 +23,12 @@ export class MatchService {
 
   deleteMatch(id): Observable<any> {
     return this._http.delete(this._matchUrl + '/' + id)
+    .do(data => console.log(JSON.stringify(data)))
+    .catch(this.handleError);
+  }
+
+  addMatch(match: IMatch): Observable<any> {
+    return this._http.post(this._matchUrl + '/', match)
     .do(data => console.log(JSON.stringify(data)))
     .catch(this.handleError);
   }

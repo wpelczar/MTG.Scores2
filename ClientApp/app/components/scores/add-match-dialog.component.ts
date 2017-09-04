@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { IMatch } from './match';
+import { IAddMatchDialogData } from './add-match-dialog-data';
 
 @Component({
   selector: 'add-match-dialog',
@@ -7,5 +9,10 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 })
 export class AddMatchDialogComponent {
   constructor(
-    public dialogRef: MdDialogRef<AddMatchDialogComponent>) { }
+    public dialogRef: MdDialogRef<AddMatchDialogComponent>,
+    @Inject(MD_DIALOG_DATA) public data: IAddMatchDialogData) { }
+
+  onNoClick(): void {
+      this.dialogRef.close();
+  }
 }

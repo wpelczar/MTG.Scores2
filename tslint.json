@@ -6,7 +6,6 @@
       "check-space"
     ],
     "curly": true,
-    "eofline": true,
     "forin": true,
     "indent": [
       true,
@@ -89,5 +88,6 @@
       "check-separator",
       "check-type"
     ]
-  }
+  },
+  "defaultSeverity": "warning"
 }
