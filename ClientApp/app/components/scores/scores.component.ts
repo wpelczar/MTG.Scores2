@@ -5,7 +5,7 @@ import { MatchService } from './match.service';
 import { IPlayer } from './player';
 import { PlayerService } from './player.service';
 import { AddMatchDialogComponent } from './add-match-dialog.component';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { IAddMatchDialogData } from './add-match-dialog-data';
 
 @Component({
@@ -17,11 +17,11 @@ export class ScoresComponent implements OnInit {
     matches: IMatch[];
     players: IPlayer[];
     selectedPlayer: IPlayer = null;
-    errorMessage: string;
+    errorMessage: string; S
 
     constructor(private _matchService: MatchService,
                 private _playerServise: PlayerService,
-                public _addMatchDialog: MdDialog) {
+                public _addMatchDialog: MatDialog) {
     }
 
     ngOnInit(): void {

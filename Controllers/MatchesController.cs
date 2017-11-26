@@ -74,8 +74,9 @@ namespace MTG.Scores2.Controllers
         await _matchRepository.SaveAllAsync();
 
         var newUri = Url.Link("MatchGet", new { id = match.ID });
+        matchModel.ID = match.ID;
 
-        return Created(newUri, _mapper.Map<MatchViewModel>(match));
+        return Created(newUri, matchModel);
       }
       catch (Exception ex)
       {
