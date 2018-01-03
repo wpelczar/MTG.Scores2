@@ -1,30 +1,48 @@
 <h1 mat-dialog-title>Dodaj mecz</h1>
 
 <div mat-dialog-content>
-  <mat-grid-list cols="2" row-height="2:2">
-    <mat-grid-tile>
-      <div *ngIf="data.availablePlayers && data.availablePlayers.length">
-        <mat-form-field>
-          <mat-select [(ngModel)]="data.selectedPlayer1">
-            <mat-option *ngFor="let player of data.availablePlayers" [value]="player">{{player.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Gracz 1
       </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <div *ngIf="data.availablePlayers && data.availablePlayers.length">
-        <select [(ngModel)]="data.selectedPlayer2" class="btn btn-default">
-          <option *ngFor="let player of data.availablePlayers" [ngValue]="player">{{player.name}}</option>
-        </select>
+      <div class="panel-body">
+        <div *ngIf="data.availablePlayers && data.availablePlayers.length">
+          <mat-form-field>
+            <mat-select [(ngModel)]="data.selectedPlayer1">
+              <mat-option *ngFor="let player of data.availablePlayers" [value]="player">{{player.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type="number" min="0" max="2" placeholder="Wynik" [(ngModel)]="data.player1Score" tabindex="1">
+          </mat-form-field>
+        </div>
       </div>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <mat-form-field>
-    <input matInput type="number" min="0" max="2" placeholder="wynik gracza 1" [(ngModel)]="data.player1Score" tabindex="1">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="number" min="0" max="2" placeholder="wynik gracza 2" [(ngModel)]="data.player2Score" tabindex="2">
-  </mat-form-field>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Gracz 2
+      </div>
+      <div class="panel-body">
+        <div *ngIf="data.availablePlayers && data.availablePlayers.length">
+          <mat-form-field>
+            <mat-select [(ngModel)]="data.selectedPlayer2">
+              <mat-option *ngFor="let player of data.availablePlayers" [value]="player">{{player.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type="number" min="0" max="2" placeholder="Wynik" [(ngModel)]="data.player2Score" tabindex="2">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()" tabindex="-1">No Thanks</button>

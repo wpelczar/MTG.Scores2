@@ -5,7 +5,8 @@ import { IAddMatchDialogData } from './add-match-dialog-data';
 
 @Component({
   selector: 'add-match-dialog',
-  templateUrl: 'add-match-dialog.component.html'
+  templateUrl: 'add-match-dialog.component.html',
+  styleUrls: ['add-match-dialog.component.css']
 })
 export class AddMatchDialogComponent {
   constructor(
