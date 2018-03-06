@@ -7,6 +7,7 @@ import { PlayerService } from './player.service';
 import { AddMatchDialogComponent } from './add-match-dialog.component';
 import { MatDialog } from '@angular/material';
 import { IAddMatchDialogData } from './add-match-dialog-data';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 
 @Component({
     selector: 'scores',
@@ -20,18 +21,18 @@ export class ScoresComponent implements OnInit {
     errorMessage: string; S
 
     constructor(private _matchService: MatchService,
-                private _playerServise: PlayerService,
-                public _addMatchDialog: MatDialog) {
+        private _playerServise: PlayerService,
+        public _dialog: MatDialog) {
     }
 
     ngOnInit(): void {
         this._matchService.getMatches()
             .subscribe(matches => this.matches = matches,
-                error => this.errorMessage = <any>error);
+            error => this.errorMessage = <any>error);
 
         this._playerServise.getPlayers()
             .subscribe(players => this.players = players,
-                error => this.errorMessage = <any>error)
+            error => this.errorMessage = <any>error)
     }
 
     edit(id: number): void {
@@ -39,27 +40,36 @@ export class ScoresComponent implements OnInit {
     }
 
     delete(id: number): void {
-        this._matchService.deleteMatch(id)
-        .subscribe(data => {
-          console.log('OK. ' + data);
-          this.matches = this.matches.filter(m => m.id !== id);
-        },
-            error => console.log('ERROR. ', error));
+        let dialogRef = this._dialog.open(
+            DeleteConfirmationDialogComponent)
+
+        dialogRef.afterClosed().subscribe((result: any) => {
+            console.log(`Result is ${JSON.stringify(result)}`);
+            if (result !== undefined) {
+                this._matchService.deleteMatch(id)
+                    .subscribe(data => {
+                        console.log('OK. ' + data);
+                        this.matches = this.matches.filter(m => m.id !== id);
+                    },
+                    error => console.log('ERROR. ', error));
+            }
+        })
     }
 
     openAddMatchDialog(): void {
-        let dialogRef = this._addMatchDialog.open(
+        let dialogRef = this._dialog.open(
             AddMatchDialogComponent, {
                 data: <IAddMatchDialogData>{
                     availablePlayers: this.players,
                     selectedPlayer1: this.players[0],
-                    selectedPlayer2: this.players[0] }
+                    selectedPlayer2: this.players[0]
+                }
             })
 
         dialogRef.afterClosed().subscribe((result: IAddMatchDialogData) => {
             console.log(`Result is ${JSON.stringify(result)}`);
-            if (result !== undefined){
-                let match = <IMatch> {
+            if (result !== undefined) {
+                let match = <IMatch>{
                     player1: {
                         id: result.selectedPlayer1.id,
                         score: result.player1Score,
@@ -72,12 +82,12 @@ export class ScoresComponent implements OnInit {
                     }
                 }
                 this._matchService.addMatch(match)
-                .subscribe(data => {
-                    console.log('Created')
-                    let createdMatch = <IMatch>(JSON.parse(data.text()));
-                    console.log(JSON.stringify(createdMatch));
-                    this.matches.push(createdMatch)
-                },
+                    .subscribe(data => {
+                        console.log('Created')
+                        let createdMatch = <IMatch>(JSON.parse(data.text()));
+                        console.log(JSON.stringify(createdMatch));
+                        this.matches.push(createdMatch)
+                    },
                     error => console.log('Error. ', error));
             }
         });

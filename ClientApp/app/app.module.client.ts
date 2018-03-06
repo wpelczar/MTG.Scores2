@@ -10,6 +10,7 @@ import { MatDialogModule, MatButtonModule, MatOptionModule, MatInputModule, MatS
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddMatchDialogComponent } from './components/scores/add-match-dialog.component';
 import { CommonModule } from '@angular/common';
+import { DeleteConfirmationDialogComponent } from './components/scores/delete-confirmation-dialog.component';
 
 @NgModule({
   bootstrap: sharedConfig.bootstrap,
@@ -35,7 +36,7 @@ import { CommonModule } from '@angular/common';
     RankingService,
     { provide: 'ORIGIN_URL', useValue: location.origin }
   ],
-  entryComponents: [AddMatchDialogComponent]
+  entryComponents: [AddMatchDialogComponent, DeleteConfirmationDialogComponent]
 
 })
 export class AppModule {

@@ -10,6 +10,7 @@ import { ScoresComponent } from './components/scores/scores.component';
 import { MatchFilterByPlayerPipe } from './components/scores/match-filter-by-player.pipe';
 import { RankingComponent } from './components/ranking/ranking.component';
 import { AddMatchDialogComponent } from './components/scores/add-match-dialog.component';
+import { DeleteConfirmationDialogComponent } from './components/scores/delete-confirmation-dialog.component';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -22,7 +23,8 @@ export const sharedConfig: NgModule = {
         ScoresComponent,
         RankingComponent,
         MatchFilterByPlayerPipe,
-        AddMatchDialogComponent
+        AddMatchDialogComponent,
+        DeleteConfirmationDialogComponent
     ],
     imports: [
         RouterModule.forRoot([

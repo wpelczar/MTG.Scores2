@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Usuwanie meczu</h2>
+
+<div mat-dialog-content>
+      <p>Na pewno chcesz usunąć mecz?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" tabindex="-1">Nie</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="data" tabindex="3">Tak</button>
+</div>
