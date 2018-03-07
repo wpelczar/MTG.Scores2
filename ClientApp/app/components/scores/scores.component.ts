@@ -4,9 +4,9 @@ import { IMatch } from './match';
 import { MatchService } from './match.service';
 import { IPlayer } from './player';
 import { PlayerService } from './player.service';
-import { AddMatchDialogComponent } from './add-match-dialog.component';
+import { EditMatchDialogComponent } from './edit-match-dialog.component';
 import { MatDialog } from '@angular/material';
-import { IAddMatchDialogData } from './add-match-dialog-data';
+import { IEditMatchDialogData } from './edit-match-dialog-data';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 
 @Component({
@@ -58,15 +58,15 @@ export class ScoresComponent implements OnInit {
 
     openAddMatchDialog(): void {
         let dialogRef = this._dialog.open(
-            AddMatchDialogComponent, {
-                data: <IAddMatchDialogData>{
+            EditMatchDialogComponent, {
+                data: <IEditMatchDialogData>{
                     availablePlayers: this.players,
                     selectedPlayer1: this.players[0],
                     selectedPlayer2: this.players[0]
                 }
             })
 
-        dialogRef.afterClosed().subscribe((result: IAddMatchDialogData) => {
+        dialogRef.afterClosed().subscribe((result: IEditMatchDialogData) => {
             console.log(`Result is ${JSON.stringify(result)}`);
             if (result !== undefined) {
                 let match = <IMatch>{

@@ -8,7 +8,7 @@ import { PlayerService } from './components/scores/player.service';
 import { RankingService } from './components/ranking/ranking.service';
 import { MatDialogModule, MatButtonModule, MatOptionModule, MatInputModule, MatSelectModule, MatGridListModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddMatchDialogComponent } from './components/scores/add-match-dialog.component';
+import { EditMatchDialogComponent } from './components/scores/edit-match-dialog.component';
 import { CommonModule } from '@angular/common';
 import { DeleteConfirmationDialogComponent } from './components/scores/delete-confirmation-dialog.component';
 
@@ -36,7 +36,7 @@ import { DeleteConfirmationDialogComponent } from './components/scores/delete-co
     RankingService,
     { provide: 'ORIGIN_URL', useValue: location.origin }
   ],
-  entryComponents: [AddMatchDialogComponent, DeleteConfirmationDialogComponent]
+  entryComponents: [EditMatchDialogComponent, DeleteConfirmationDialogComponent]
 
 })
 export class AppModule {
