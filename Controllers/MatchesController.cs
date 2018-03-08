@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MTG.Scores2.DataAccess;
 using MTG.Scores2.Models;
 using MTG.Scores2.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MTG.Scores2.Controllers
@@ -83,6 +81,31 @@ namespace MTG.Scores2.Controllers
       }
 
       return StatusCode(StatusCodes.Status500InternalServerError);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, [FromBody]MatchViewModel matchModel)
+    {
+      try
+      {
+        var match = await _matchRepository.GetMatchById(id);
+        if (match == null)
+        {
+          return NotFound($"Match with id {id} not found");
+        }
+
+        _mapper.Map(matchModel, match);
+
+        if (await _matchRepository.SaveAllAsync())
+        {
+          return Ok(_mapper.Map<MatchViewModel>(match));
+        }
+      }
+      catch(Exception ex)
+      {
+      }
+
+      return BadRequest("Could not update match");
     }
 
     [HttpDelete("{id}")]
