@@ -6,14 +6,14 @@ import { IPlayer } from './player';
   name: 'matchFilterByPlayer'
 })
 export class MatchFilterByPlayerPipe implements PipeTransform {
-  transform(value: IMatch[], filterBy: IPlayer) : IMatch[] {
-    console.log('Filetring by: '+ JSON.stringify(filterBy))
-    
-    if(filterBy == null){
+  transform(value: IMatch[], filterBy: IPlayer): IMatch[] {
+    console.log('Filetring by: ' + JSON.stringify(filterBy))
+
+    if (filterBy == null) {
       return value;
     }
 
     return value.filter((match: IMatch) =>
-      match.player1.id == filterBy.id || match.player2.id == filterBy.id);
+      match.player1.id === filterBy.id || match.player2.id === filterBy.id);
   }
 }

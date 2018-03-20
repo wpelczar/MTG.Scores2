@@ -11,6 +11,7 @@ import { MatchFilterByPlayerPipe } from './components/scores/match-filter-by-pla
 import { RankingComponent } from './components/ranking/ranking.component';
 import { EditMatchDialogComponent } from './components/scores/edit-match-dialog.component';
 import { DeleteConfirmationDialogComponent } from './components/scores/delete-confirmation-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -24,7 +25,7 @@ export const sharedConfig: NgModule = {
         RankingComponent,
         MatchFilterByPlayerPipe,
         EditMatchDialogComponent,
-        DeleteConfirmationDialogComponent
+        DeleteConfirmationDialogComponent,
     ],
     imports: [
         RouterModule.forRoot([
