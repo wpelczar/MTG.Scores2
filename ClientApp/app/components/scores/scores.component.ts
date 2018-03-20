@@ -5,7 +5,7 @@ import { MatchService } from './match.service';
 import { IPlayer } from './player';
 import { PlayerService } from './player.service';
 import { EditMatchDialogComponent } from './edit-match-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { IEditMatchDialogData } from './edit-match-dialog-data';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
 
@@ -18,7 +18,7 @@ export class ScoresComponent implements OnInit {
   matches: IMatch[];
   players: IPlayer[];
   selectedPlayer: IPlayer = null;
-  errorMessage: string; S
+  errorMessage: string;
 
   constructor(private _matchService: MatchService,
     private _playerServise: PlayerService,
