@@ -8,6 +8,9 @@ import { EditMatchDialogComponent } from './edit-match-dialog.component';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { IEditMatchDialogData } from './edit-match-dialog-data';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
+import { Observable } from 'rxjs/Observable';
+import { DataSource } from '@angular/cdk/table';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'scores',
@@ -16,9 +19,11 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.
 })
 export class ScoresComponent implements OnInit {
   matches: IMatch[];
+  matchesDataSource: MatchesDataSource | null;
   players: IPlayer[];
   selectedPlayer: IPlayer = null;
   errorMessage: string;
+  displayedColumns = ['player1.name', 'score', 'player2.name', 'actions'];
 
   constructor(private _matchService: MatchService,
     private _playerServise: PlayerService,
@@ -26,13 +31,12 @@ export class ScoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._matchService.getMatches()
-      .subscribe(matches => this.matches = matches,
-      error => this.errorMessage = <any>error);
-
     this._playerServise.getPlayers()
       .subscribe(players => this.players = players,
-      error => this.errorMessage = <any>error)
+      error => this.errorMessage = <any>error);
+
+    this.matchesDataSource = new MatchesDataSource(this._matchService);
+    this._matchService.getMatches();
   }
 
   edit(match: IMatch): void {
@@ -64,12 +68,7 @@ export class ScoresComponent implements OnInit {
           }
         };
 
-        this._matchService.editMatch(matchEditModel)
-          .subscribe(data => {
-            console.log('OK. ' + data);
-            Object.assign(match, matchEditModel);
-          },
-          error => console.log('ERROR. ', error));
+        this._matchService.editMatch(matchEditModel);
       }
     });
   }
@@ -81,12 +80,7 @@ export class ScoresComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Result is ${JSON.stringify(result)}`);
       if (result !== undefined) {
-        this._matchService.deleteMatch(id)
-          .subscribe(data => {
-            console.log('OK. ' + data);
-            this.matches = this.matches.filter(m => m.id !== id);
-          },
-          error => console.log('ERROR. ', error));
+        this._matchService.deleteMatch(id);
       }
     })
   }
@@ -116,15 +110,23 @@ export class ScoresComponent implements OnInit {
             name: result.selectedPlayer2.name
           }
         }
-        this._matchService.addMatch(match)
-          .subscribe(data => {
-            console.log('Created')
-            let createdMatch = <IMatch>(JSON.parse(data.text()));
-            console.log(JSON.stringify(createdMatch));
-            this.matches.push(createdMatch)
-          },
-          error => console.log('Error. ', error));
+
+        this._matchService.addMatch(match);
       }
     });
+  }
+}
+
+export class MatchesDataSource extends DataSource<IMatch> {
+
+  constructor(private _matchService: MatchService){
+    super();
+  }
+
+  connect(): BehaviorSubject<IMatch[]> {
+    return this._matchService.dataChange;
+  }
+
+  disconnect(): void {
   }
 }

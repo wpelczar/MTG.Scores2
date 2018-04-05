@@ -1,5 +1,5 @@
 export interface IRankingRecord {
-    name : string;
+    name: string;
     matches: number;
     wonMatches: number;
     lostMatches: number;

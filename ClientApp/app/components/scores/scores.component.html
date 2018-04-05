@@ -5,35 +5,37 @@
     </button>
 </div>
 
-<div *ngIf="!players || !matches">
-  Loading...
-</div>
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="matchesDataSource">
 
-<div *ngIf = "players && players.length">
-  <select [(ngModel)]="selectedPlayer" class="btn btn-default">
-    <option [ngValue]="null" selected="selected">Wszyscy gracze</option>
-    <option *ngFor="let player of players" [ngValue]="player">{{player.name}}</option>
-  </select>
-</div>
+    <ng-container matColumnDef="player1.name">
+      <mat-header-cell *matHeaderCellDef> Gracz 1 </mat-header-cell>
+      <mat-cell *matCellDef="let match"> {{match.player1.name}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="score">
+      <mat-header-cell *matHeaderCellDef> Wynik </mat-header-cell>
+      <mat-cell *matCellDef="let match"> {{match.player1.score}} : {{match.player2.score}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="player2.name">
+      <mat-header-cell *matHeaderCellDef> Gracz 2 </mat-header-cell>
+      <mat-cell *matCellDef="let match"> {{match.player2.name}} </mat-cell>
+    </ng-container>
 
-<table class="table" *ngIf="matches && matches.length">
-  <thead>
-    <tr>
-      <th>Planeswalker 1</th>
-      <th>Wynik</th>
-      <th>Planeswalker 2</th>
-      <th></th>
-    </tr>
-  </thead>
-<tbody>
-  <tr *ngFor="let match of matches | matchFilterByPlayer : selectedPlayer">
-    <td>{{match.player1.name}}</td>
-    <td>{{match.player1.score}} : {{match.player2.score}}</td>
-    <td>{{match.player2.name}}</td>
-    <td>
-      <button (click)="edit(match)" class="btn btn-default"><i class="fa fa-lg fa-pencil-square-o"></i></button>
-      <button (click)="delete(match.id)" class="btn btn-danger"><i class="fa fa-lg fa-trash"></i></button>
-    </td>
-  </tr>
-</tbody>
-</table>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let match">
+        <button mat-icon-button (click)="edit(match)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(match.id)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row [ngClass]="{highlight: selectedPlayer}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
