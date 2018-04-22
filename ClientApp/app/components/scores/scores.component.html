@@ -1,8 +1,18 @@
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <button *ngIf = "players && players.length" (click)="openAddMatchDialog()" class="btn btn-lg btn-success">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       Dodaj mecz
     </button>
+</div> -->
+
+<div id="matches-toolbar">
+  <mat-toolbar color="primary">
+    <span>Wyniki</span>   
+  </mat-toolbar>
+  
+  <button id="add-match-button" mat-fab color="accent"  (click)="openAddMatchDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 
 <div class="mat-elevation-z8">
@@ -37,5 +47,5 @@
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row [ngClass]="{highlight: selectedPlayer}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+  </mat-table> 
 </div>

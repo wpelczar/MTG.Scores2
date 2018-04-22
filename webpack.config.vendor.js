@@ -24,7 +24,7 @@ module.exports = (env) => {
         '@angular/forms',
         '@angular/http',
         '@angular/material',
-        '@angular/material/prebuilt-themes/deeppurple-amber.css',
+        '@angular/material/prebuilt-themes/indigo-pink.css',
         '@angular/platform-browser',
         '@angular/platform-browser-dynamic',
         '@angular/router',

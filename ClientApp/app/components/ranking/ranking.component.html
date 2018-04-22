@@ -1,7 +1,7 @@
 <h1>This is RANKING!!!!!</h1>
 
 <div *ngIf="!ranking">
-  Loading...
+  <mat-spinner></mat-spinner>
 </div>
 
 <div class="row" *ngIf="ranking && ranking.length">

@@ -8,7 +8,7 @@ import { PlayerService } from './components/scores/player.service';
 import { RankingService } from './components/ranking/ranking.service';
 import {
   MatDialogModule, MatButtonModule, MatOptionModule, MatInputModule, MatSelectModule,
-  MatGridListModule, MatFormFieldModule, MatTableModule, MatIconModule
+  MatGridListModule, MatFormFieldModule, MatTableModule, MatIconModule, MatToolbar, MatToolbarModule, MatProgressSpinnerModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditMatchDialogComponent } from './components/scores/edit-match-dialog.component';
@@ -34,6 +34,8 @@ import { DeleteConfirmationDialogComponent } from './components/scores/delete-co
     ReactiveFormsModule,
     MatTableModule,
     MatIconModule,
+    MatToolbarModule,
+    MatProgressSpinnerModule,
     ...sharedConfig.imports
   ],
   providers: [
