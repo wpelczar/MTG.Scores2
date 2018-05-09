@@ -5,7 +5,7 @@ import { MatchService } from './components/scores/match.service';
 import { PlayerService } from './components/scores/player.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RankingService } from './components/ranking/ranking.service';
-import { MatDialogModule, MatSelectModule, MatOptionModule, MatTableModule, MatIconModule, MatToolbarModule, MatProgressSpinnerModule } from '@angular/material';
+import { MaterialModule } from './shared/material.module';
 
 
 @NgModule({
@@ -19,14 +19,8 @@ import { MatDialogModule, MatSelectModule, MatOptionModule, MatTableModule, MatI
   imports: [
     FormsModule,
     ServerModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatOptionModule,
+    MaterialModule,
     ReactiveFormsModule,
-    MatTableModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule,
     ...sharedConfig.imports
   ]
 })

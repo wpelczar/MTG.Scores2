@@ -6,10 +6,7 @@ import { sharedConfig } from './app.module.shared';
 import { MatchService } from './components/scores/match.service';
 import { PlayerService } from './components/scores/player.service';
 import { RankingService } from './components/ranking/ranking.service';
-import {
-  MatDialogModule, MatButtonModule, MatOptionModule, MatInputModule, MatSelectModule,
-  MatGridListModule, MatFormFieldModule, MatTableModule, MatIconModule, MatToolbar, MatToolbarModule, MatProgressSpinnerModule
-} from '@angular/material';
+import { MaterialModule} from './shared/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditMatchDialogComponent } from './components/scores/edit-match-dialog.component';
 import { CommonModule } from '@angular/common';
@@ -24,18 +21,8 @@ import { DeleteConfirmationDialogComponent } from './components/scores/delete-co
     CommonModule,
     FormsModule,
     HttpModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSelectModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatOptionModule,
+    MaterialModule,
     ReactiveFormsModule,
-    MatTableModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule,
     ...sharedConfig.imports
   ],
   providers: [
