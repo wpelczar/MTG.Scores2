@@ -47,7 +47,8 @@ export class ScoresComponent implements OnInit {
           selectedPlayer1: this.players.find(x => x.id === match.player1.id),
           selectedPlayer2: this.players.find(x => x.id === match.player2.id),
           player1Score: match.player1.score,
-          player2Score: match.player2.score
+          player2Score: match.player2.score,
+          title: 'Edytuj mecz'
         }
       });
 
@@ -91,7 +92,8 @@ export class ScoresComponent implements OnInit {
         data: <IEditMatchDialogData>{
           availablePlayers: this.players,
           selectedPlayer1: this.players[0],
-          selectedPlayer2: this.players[0]
+          selectedPlayer2: this.players[0],
+          title: 'Dodaj mecz'
         }
       });
 

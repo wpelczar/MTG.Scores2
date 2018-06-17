@@ -5,5 +5,6 @@ export interface IEditMatchDialogData {
   player2Score: number,
   selectedPlayer1: IPlayer,
   selectedPlayer2: IPlayer,
-  availablePlayers: IPlayer[]
+  availablePlayers: IPlayer[],
+  title: string
 }

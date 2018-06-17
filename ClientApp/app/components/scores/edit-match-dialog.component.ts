@@ -44,7 +44,7 @@ export class EditMatchDialogComponent implements OnInit {
       player2Score: [this.data.player2Score, [Validators.min(0), Validators.max(2), Validators.required]],
       selectedPlayer1: [this.data.selectedPlayer1, []],
       selectedPlayer2: [this.data.selectedPlayer2, []]
-    }, {validator: matchFormValidator})
+    }, {validator: matchFormValidator});
   }
   constructor(
     public dialogRef: MatDialogRef<EditMatchDialogComponent>,
