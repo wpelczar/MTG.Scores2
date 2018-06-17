@@ -1,32 +1,49 @@
-<h1>This is RANKING!!!!!</h1>
+<div id="matches-toolbar">
+  <mat-toolbar color="primary">
+    <span>Tabela</span>   
+  </mat-toolbar>
 
-<div *ngIf="!ranking">
-  <mat-spinner></mat-spinner>
 </div>
 
-<div class="row" *ngIf="ranking && ranking.length">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Gracz</th>
-        <th>Mecze</th>
-        <th>Wygrane</th>
-        <th>Przegrane</th>
-        <th>Partie wygrane</th>
-        <th>Partie przegrane</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rankingRecord of ranking; let i = index">
-        <td>{{i + 1}}</td>
-        <td>{{rankingRecord.name}}</td>
-        <td class="important-stat">{{rankingRecord.matches}}</td>
-        <td class="important-stat">{{rankingRecord.wonMatches}}</td>
-        <td class="important-stat">{{rankingRecord.lostMatches}}</td>
-        <td>{{rankingRecord.wonPoints}}</td>
-        <td>{{rankingRecord.lostPoints}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="ranking">
+
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+      <mat-cell *matCellDef="let i = index"> {{i+1}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Gracz</mat-header-cell>
+      <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="matches">
+      <mat-header-cell *matHeaderCellDef>Mecze</mat-header-cell>
+      <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.matches}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="wonMatches">
+      <mat-header-cell *matHeaderCellDef>Wygrane</mat-header-cell>
+      <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.wonMatches}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lostMatches">
+      <mat-header-cell *matHeaderCellDef>Przegrane</mat-header-cell>
+      <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.lostMatches}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="wonPoints">
+      <mat-header-cell *matHeaderCellDef>Wygrane partie</mat-header-cell>
+      <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.wonPoints}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lostPoints">
+      <mat-header-cell *matHeaderCellDef>Przegrane partie</mat-header-cell>
+      <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.lostPoints}} </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table> 
 </div>
