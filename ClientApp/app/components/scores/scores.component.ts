@@ -5,10 +5,9 @@ import { MatchService } from './match.service';
 import { IPlayer } from './player';
 import { PlayerService } from './player.service';
 import { EditMatchDialogComponent } from './edit-match-dialog.component';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { IEditMatchDialogData } from './edit-match-dialog-data';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog.component';
-import { Observable } from 'rxjs/Observable';
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -26,12 +25,12 @@ export class ScoresComponent implements OnInit {
   displayedColumns = ['player1.name', 'score', 'player2.name', 'actions'];
 
   constructor(private _matchService: MatchService,
-    private _playerServise: PlayerService,
-    public _dialog: MatDialog) {
+    private _playerService: PlayerService,
+    private _dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this._playerServise.getPlayers()
+    this._playerService.getPlayers()
       .subscribe(players => this.players = players,
       error => this.errorMessage = <any>error);
 
