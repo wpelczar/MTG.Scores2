@@ -50,7 +50,13 @@ namespace MTG.Scores2.Api
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       app.UseCors(
-        builder => builder.AllowAnyOrigin()
+        builder =>
+        {
+          builder.AllowAnyOrigin();
+          builder.AllowAnyMethod();
+          builder.AllowAnyHeader();
+        }
+
       );
 
       if (env.IsDevelopment())
