@@ -1,10 +1,3 @@
-<div id="matches-toolbar">
-  <mat-toolbar color="primary">
-    <span>Tabela</span>   
-  </mat-toolbar>
-
-</div>
-
 <div class="mat-elevation-z8">
   <mat-table #table [dataSource]="ranking">
 
@@ -42,8 +35,8 @@
       <mat-header-cell *matHeaderCellDef>Przegrane partie</mat-header-cell>
       <mat-cell *matCellDef="let rankingRecord"> {{rankingRecord.lostPoints}} </mat-cell>
     </ng-container>
-  
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table> 
+  </mat-table>
 </div>

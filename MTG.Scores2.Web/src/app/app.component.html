@@ -1,29 +1,33 @@
 <mat-sidenav-container class="app-sidenav-container">
 
-  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="true" [mode]="'side'">
-      <mat-toolbar color="primary">
-          MTG Scores
-      </mat-toolbar>
+  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'">
+    <mat-toolbar color="primary">
+      <span>MTG Scores</span>
+    </mat-toolbar>
 
-      <mat-nav-list>
-          <mat-list-item [routerLinkActive]="['link-active']" [routerLink]="['/ranking']">
-              <a matline >
-                  <span class='glyphicon glyphicon-th-list'></span> Tabela
-              </a>
-          </mat-list-item>
-          <mat-list-item [routerLinkActive]="['link-active']" [routerLink]="['/scores']">
-              <a matline >
-                  <span class='glyphicon glyphicon-th-list'></span> Wyniki
-              </a>
-          </mat-list-item>
-      </mat-nav-list>
+    <mat-nav-list>
+      <mat-list-item [routerLinkActive]="['link-active']" [routerLink]="['/ranking']">
+        <a matline>
+          <span class='glyphicon glyphicon-th-list'></span> Tabela
+        </a>
+      </mat-list-item>
+      <mat-list-item [routerLinkActive]="['link-active']" [routerLink]="['/scores']">
+        <a matline>
+          <span class='glyphicon glyphicon-th-list'></span> Wyniki
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
 
   </mat-sidenav>
 
   <div class="app-sidenav-content">
-      <div class="wrapper">
-          <router-outlet></router-outlet>
-      </div>
+    <app-toolbar 
+      title={{title}}
+      (toggleSidenav)="sidenav.toggle()">  
+    </app-toolbar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 
 </mat-sidenav-container>

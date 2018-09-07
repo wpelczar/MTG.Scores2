@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatchService } from './shared/services/match.service';
 import { PlayerService } from './shared/services/player.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +22,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RankingComponent,
     ScoresComponent,
     EditMatchDialogComponent,
-    DeleteConfirmationDialogComponent
+    DeleteConfirmationDialogComponent,
+    ToolbarComponent
   ],
   imports: [
     RouterModule.forRoot([
       { path: '', redirectTo: 'ranking', pathMatch: 'full' },
-      { path: 'ranking', component: RankingComponent },
-      { path: 'scores', component: ScoresComponent },
+      { path: 'ranking', component: RankingComponent, data: {title: 'Tabela'} },
+      { path: 'scores', component: ScoresComponent, data: {title: 'Wyniki' } },
       { path: '**', redirectTo: 'ranking' }
     ]),
     BrowserModule,
