@@ -4,6 +4,7 @@ import { RankingService } from '../shared/services/ranking.service';
 
 @Component({
   templateUrl: './ranking.component.html',
+  styleUrls: ['./ranking.component.scss'],
   selector: 'app-ranking'
 })
 export class RankingComponent implements OnInit {

@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { IMatch } from '../shared/models/match';
 import { MatchService } from '../shared/services/match.service';
@@ -9,7 +8,8 @@ import { MatDialog } from '@angular/material';
 import { IEditMatchDialogData } from '../shared/models/edit-match-dialog-data';
 import { DeleteConfirmationDialogComponent } from '../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { DataSource } from '@angular/cdk/table';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { merge, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scores',
@@ -23,6 +23,7 @@ export class ScoresComponent implements OnInit {
   selectedPlayer: IPlayer = null;
   errorMessage: string;
   displayedColumns = ['player1.name', 'score', 'player2.name', 'actions'];
+  filterChange = new BehaviorSubject('');
 
   constructor(private _matchService: MatchService,
     private _playerService: PlayerService,
@@ -36,6 +37,10 @@ export class ScoresComponent implements OnInit {
 
     this.matchesDataSource = new MatchesDataSource(this._matchService);
     this._matchService.getMatches();
+  }
+
+  applyFilter(filterValue: string) {
+    this.matchesDataSource.filter = filterValue;
   }
 
   edit(match: IMatch): void {
@@ -119,13 +124,30 @@ export class ScoresComponent implements OnInit {
 }
 
 export class MatchesDataSource extends DataSource<IMatch> {
+  _filterChange = new BehaviorSubject('');
 
-  constructor(private _matchService: MatchService) {
+  get filter(): string {
+    return this._filterChange.value;
+  }
+
+  set filter(filter: string) {
+    this._filterChange.next(filter);
+  }
+
+  constructor(private _matchService: MatchService, ) {
     super();
   }
 
-  connect(): BehaviorSubject<IMatch[]> {
-    return this._matchService.dataChange;
+  connect(): Observable<IMatch[]> {
+
+    return this._matchService.dataChange.pipe(
+      merge(this._filterChange),
+      map(() => {
+        return this._matchService.data.filter(
+          m =>
+            m.player1.name.toLowerCase().includes(this._filterChange.value)
+            || m.player2.name.toLowerCase().includes(this._filterChange.value));
+      }));
   }
 
   disconnect(): void {
