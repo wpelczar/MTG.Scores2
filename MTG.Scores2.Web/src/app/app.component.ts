@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
   private title: string;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router ) {  
+  constructor(private activatedRoute: ActivatedRoute, private router: Router ) {
   }
 
   @ViewChild(MatSidenav) sidenav: MatSidenav;
