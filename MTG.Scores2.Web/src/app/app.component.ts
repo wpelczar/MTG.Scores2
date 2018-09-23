@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material';
 
 const SMALL_WIDTH_BREAKPOINT = 720;
 @Component({
@@ -12,9 +13,10 @@ export class AppComponent implements OnInit {
 
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
   private title: string;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router ) {
-
+  constructor(private activatedRoute: ActivatedRoute, private router: Router ) {  
   }
+
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   ngOnInit(): void {
     this.router.events
@@ -36,6 +38,9 @@ export class AppComponent implements OnInit {
     )
     .subscribe(data => {
       this.title = data['title'];
+      if (this.isScreenSmall()) {
+        this.sidenav.close();
+      }
     });
   }
 
