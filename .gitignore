@@ -25,7 +25,8 @@ bin/
 Bin/
 obj/
 Obj/
-
+out/
+Out/
 # Visual Studio 2015 cache/options directory
 .vs/
 /wwwroot/dist/
