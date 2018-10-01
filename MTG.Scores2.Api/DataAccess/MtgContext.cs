@@ -18,7 +18,5 @@ namespace MTG.Scores2.Api.DataAccess
     public DbSet<Match> Matches { get; set; }
 
     public DbSet<Player> Players { get; set; }
-
-    
   }
 }
