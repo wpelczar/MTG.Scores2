@@ -9,13 +9,12 @@ services:
              condition: service_healthy
  
     db:
-        image: "microsoft/mssql-server-windows-express:2017-latest"
+        build: docker/db/.
         ports: 
           - "1433:1433"
-        environment:
-            SA_PASSWORD: "Your_password123"
-            ACCEPT_EULA: "Y"
         healthcheck:
             test: [ "CMD", "sqlcmd", "-U", "sa", "-P", "Your_password123", "-Q", "select 1" ]
             interval: 5s
             retries: 20
+        volumes:
+            - "c:/mssqldata:C:/mssqldata"
