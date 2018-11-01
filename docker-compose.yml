@@ -1,7 +1,7 @@
 version: '2.1'
 services:
     api:
-        build: MTG.Scores2.Api/.
+        build: src/MTG.Scores2.Api/.
         ports:
             - "5000:80"
         depends_on:
@@ -9,7 +9,8 @@ services:
              condition: service_healthy
  
     db:
-        build: docker/db/.
+        build: 
+          context: Database/.
         ports: 
           - "1433:1433"
         healthcheck:
