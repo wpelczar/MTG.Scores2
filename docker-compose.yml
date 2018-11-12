@@ -7,7 +7,8 @@ services:
         depends_on:
             db:
              condition: service_healthy
- 
+        networks:
+            - app-net
     db:
         build: 
           context: Database/.
@@ -19,3 +20,16 @@ services:
             retries: 20
         volumes:
             - "c:/mssqldata:C:/mssqldata"
+        networks:
+            - app-net
+    web:
+      build: src/MTG.Scores2.Web/.
+      ports:
+          - "80:80"
+      depends_on:
+        - api
+      networks:
+        - app-net
+
+networks:
+  app-net:

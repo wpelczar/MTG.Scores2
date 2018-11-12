@@ -12,7 +12,7 @@ const SMALL_WIDTH_BREAKPOINT = 720;
 export class AppComponent implements OnInit {
 
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
-  private title: string;
+  title: string;
   constructor(private activatedRoute: ActivatedRoute, private router: Router ) {
   }
 
