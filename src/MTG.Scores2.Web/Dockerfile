@@ -12,6 +12,7 @@ RUN ng build --prod --build-optimizer
 
 FROM sixeyed/nginx:windowsservercore
 COPY --from=build-env /app/dist/web C:/nginx/html
+COPY /nginx.conf C:/nginx/conf/nginx.conf
 
 
 

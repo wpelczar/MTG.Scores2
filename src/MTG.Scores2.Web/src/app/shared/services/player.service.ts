@@ -10,7 +10,7 @@ export class PlayerService {
   private _matchUrl;
 
   constructor(private _http: Http) {
-    this._matchUrl = environment.apiUrl + '/api/players';
+    this._matchUrl = environment.apiUrl + '/players';
   }
 
   getPlayers(): Observable<IPlayer[]> {

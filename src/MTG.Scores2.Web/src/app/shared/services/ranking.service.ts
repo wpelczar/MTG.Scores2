@@ -11,7 +11,7 @@ export class RankingService {
   private _rankingUrl;
 
   constructor(private _http: Http) {
-    this._rankingUrl = environment.apiUrl + '/api/ranking';
+    this._rankingUrl = environment.apiUrl + '/ranking';
   }
 
   getRanking(): Observable<IRankingRecord[]> {

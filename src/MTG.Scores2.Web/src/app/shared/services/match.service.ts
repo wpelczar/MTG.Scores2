@@ -16,7 +16,7 @@ export class MatchService {
 
   constructor(private _http: Http,
     private _snackBar: MatSnackBar) {
-    this._matchUrl = environment.apiUrl + '/api/matches';
+    this._matchUrl = environment.apiUrl + '/matches';
   }
 
   getMatches(): void {
