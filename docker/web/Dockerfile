@@ -4,15 +4,15 @@ WORKDIR /app
 
 RUN npm install -g @angular/cli@6.1.5 --silent
 
-COPY package.json package.json
+COPY src/MTG.Scores2.Web/package.json package.json
 
 RUN npm install --silent
-COPY . .
+COPY src/MTG.Scores2.Web/ .
 RUN ng build --prod --build-optimizer
 
 FROM sixeyed/nginx:windowsservercore
 COPY --from=build-env /app/dist/web C:/nginx/html
-COPY /nginx.conf C:/nginx/conf/nginx.conf
+COPY docker/web/nginx.conf C:/nginx/conf/nginx.conf
 
 
 

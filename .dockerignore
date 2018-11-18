@@ -6,8 +6,11 @@ docker-compose*
 .git
 .gitignore
 .env
-*/bin
-*/obj
+**/bin
+**/obj
+**/node_modules
+**/bower_components
+**/dist
 README.md
 LICENSE
 .vscode
