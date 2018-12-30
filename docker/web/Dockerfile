@@ -1,4 +1,4 @@
-FROM stefanscherer/node-windows:10.13 AS build-env
+FROM node:10.15.0 AS build-env
 
 WORKDIR /app
 
@@ -10,9 +10,9 @@ RUN npm install --silent
 COPY src/MTG.Scores2.Web/ .
 RUN ng build --prod --build-optimizer
 
-FROM sixeyed/nginx:windowsservercore
-COPY --from=build-env /app/dist/web C:/nginx/html
-COPY docker/web/nginx.conf C:/nginx/conf/nginx.conf
+FROM nginx:1.15.8
+COPY --from=build-env /app/dist/web /usr/share/nginx/html
+COPY docker/web/nginx.conf /etc/nginx/conf.d/default.conf
 
 
 

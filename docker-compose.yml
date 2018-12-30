@@ -1,26 +1,24 @@
-version: '2.1'
+version: '3.3'
 services:
   api:
     build: 
       context: ./
       dockerfile: ./docker/api/Dockerfile
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
       - app-net
   db:
-    build: 
-      context: ./
-      dockerfile: ./docker/db/Dockerfile
-    ports: 
-      - "1433:1433"
+    image: "microsoft/mssql-server-linux"
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
     healthcheck:
-      test: [ "CMD", "sqlcmd", "-U", "sa", "-P", "Your_password123", "-Q", "select 1" ]
+      test: [ "CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "Your_password123", "-Q", "select 1" ]
       interval: 5s
       retries: 20
     volumes:
-      - "c:/mssqldata:C:/mssqldata"
+      - sqlvolume:/var/opt/mssql
     networks:
       - app-net
   web:
@@ -36,3 +34,6 @@ services:
 
 networks:
   app-net:
+
+volumes:
+  sqlvolume:
