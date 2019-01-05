@@ -11,7 +11,7 @@ pool:
 
 variables:
 - group: Dockerhub
-- name: imageName
+- name: imageName_api
   value: 'mtgscores2_api:ci-$(build.buildId)'
 
 steps:
