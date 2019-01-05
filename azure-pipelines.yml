@@ -10,7 +10,9 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  imageName_api: 'mtgscores2_api:ci-$(build.buildId)'
+- group: Dockerhub
+- name: imageName
+  value: 'mtgscores2_api:ci-$(build.buildId)'
 
 steps:
 - script: docker build -f docker/api/Dockerfile -t $(dockerhub_user)/$(imageName_api) .
