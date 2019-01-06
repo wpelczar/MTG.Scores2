@@ -18,7 +18,7 @@ steps:
 - task: Docker@1
   inputs:
     imageName: $(dockerhub_user)/$(imageName_api)
-    workingDirectory: .
+    useDefaultContext: false
     buildContext: .
     dockerFile: docker/api/Dockerfile
   displayName: 'docker build'
