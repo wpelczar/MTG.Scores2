@@ -13,6 +13,8 @@ variables:
 - group: Dockerhub
 - name: imageName_api
   value: 'mtgscores2_api:ci-$(build.buildId)'
+- name: imageName_web
+  value: 'mtgscores2_web:ci-$(build.buildId)'
 
 steps:
 - task: Docker@1
@@ -22,7 +24,15 @@ steps:
     buildContext: .
     dockerFile: docker/api/Dockerfile
     addDefaultLabels: false
-  displayName: 'docker build'
+  displayName: 'docker build api'
+- task: Docker@1
+  inputs:
+    imageName: $(dockerhub_user)/$(imageName_web)
+    useDefaultContext: false
+    buildContext: .
+    dockerFile: docker/web/Dockerfile
+    addDefaultLabels: false
+  displayName: 'docker build web'
 - task: Docker@1
   inputs:
     dockerRegistryEndpoint: 'wpelczar_dockerhub'
@@ -33,4 +43,9 @@ steps:
   inputs:
     command: Push an image
     imageName: $(dockerhub_user)/$(imageName_api)
-  displayName: 'push image to dockerhub'
+  displayName: 'push api image to dockerhub'
+- task: Docker@1
+  inputs:
+    command: Push an image
+    imageName: $(dockerhub_user)/$(imageName_web)
+  displayName: 'push web image to dockerhub'
