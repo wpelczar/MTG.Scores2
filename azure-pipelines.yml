@@ -17,7 +17,8 @@ variables:
 steps:
 - task: Docker@1
   inputs:
-    containerName: $(dockerhub_user)/$(imageName_api)
+    imageName: $(dockerhub_user)/$(imageName_api)
+    workingDirectory: .
     buildContext: .
     dockerFile: docker/api/Dockerfile
   displayName: 'docker build'
