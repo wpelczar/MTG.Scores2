@@ -25,8 +25,8 @@ steps:
   displayName: 'docker build'
 - task: Docker@1
   inputs:
-    dockerRegistryEndpoint: wpelczar_dockerhub
-    containerregistrytype: Container Registry
+    dockerRegistryEndpoint: 'wpelczar_dockerhub'
+    containerregistrytype: 'Container Registry'
     command: login
   displayName: 'dockerhub login'
 - task: Docker@1
