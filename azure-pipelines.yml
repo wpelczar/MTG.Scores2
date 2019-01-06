@@ -21,4 +21,16 @@ steps:
     useDefaultContext: false
     buildContext: .
     dockerFile: docker/api/Dockerfile
+    addDefaultLabels: false
   displayName: 'docker build'
+- task: Docker@1
+  inputs:
+    dockerRegistryEndpoint: wpelczar_dockerhub
+    containerregistrytype: Container Registry
+    command: login
+  displayName: 'dockerhub login'
+- task: Docker@1
+  inputs:
+    command: Push an image
+    imageName: $(dockerhub_user)/$(imageName_api)
+  displayName: 'push image to dockerhub'
