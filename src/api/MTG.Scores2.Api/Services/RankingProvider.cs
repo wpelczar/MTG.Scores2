@@ -9,12 +9,10 @@ namespace MTG.Scores2.Api.Services
 {
   public class RankingProvider : IRankingProvider
   {
-    private IMatchRepository _matchRepository;
     private IPlayerRepository _playerRepository;
 
-    public RankingProvider(IMatchRepository matchRepository, IPlayerRepository playerRepository)
+    public RankingProvider(IPlayerRepository playerRepository)
     {
-      _matchRepository = matchRepository;
       _playerRepository = playerRepository;
     }
 
