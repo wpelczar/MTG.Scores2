@@ -20,17 +20,13 @@ steps:
 - task: Docker@1
   inputs:
     imageName: $(dockerhub_user)/$(imageName_api)
-    useDefaultContext: false
-    buildContext: .
-    dockerFile: docker/api/Dockerfile
+    dockerFile: src/api/Dockerfile
     addDefaultLabels: false
   displayName: 'docker build api'
 - task: Docker@1
   inputs:
     imageName: $(dockerhub_user)/$(imageName_web)
-    useDefaultContext: false
-    buildContext: .
-    dockerFile: docker/web/Dockerfile
+    dockerFile: src/web/Dockerfile
     addDefaultLabels: false
   displayName: 'docker build web'
 - task: Docker@1
