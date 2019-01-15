@@ -1,0 +1,26 @@
+FROM microsoft/dotnet:sdk AS build-env
+WORKDIR /app
+
+# restore
+COPY MTG.Scores2.Api/*.csproj ./MTG.Scores2.Api/
+RUN dotnet restore MTG.Scores2.Api/MTG.Scores2.Api.csproj
+
+COPY MTG.Scores2.Api.Tests/*.csproj ./MTG.Scores2.Api.Tests/
+RUN dotnet restore MTG.Scores2.Api.Tests/MTG.Scores2.Api.Tests.csproj
+
+
+# Copy src
+COPY MTG.Scores2.Api/* ./MTG.Scores2.Api/
+COPY MTG.Scores2.Api.Tests/* ./MTG.Scores2.Api.Tests/
+
+# test
+RUN dotnet test ./MTG.Scores2.Api.Tests/MTG.Scores2.Api.Tests.csproj
+
+# publish
+RUN dotnet publish MTG.Scores2.Api/MTG.Scores2.Api.csproj -c Release -o /out
+
+# Build runtime image
+FROM microsoft/dotnet:aspnetcore-runtime
+WORKDIR /app
+COPY --from=build-env /out .
+ENTRYPOINT ["dotnet", "MTG.Scores2.Api.dll"]

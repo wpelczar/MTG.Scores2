@@ -20,7 +20,7 @@ steps:
 - task: Docker@1
   inputs:
     imageName: $(dockerhub_user)/$(imageName_api)
-    dockerFile: src/api/Dockerfile
+    dockerFile: src/api/ci.build.yml
     addDefaultLabels: false
   displayName: 'docker build api'
 - task: Docker@1
