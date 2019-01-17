@@ -26,6 +26,7 @@ steps:
     docker cp api_build:/out $(System.DefaultWorkingDirectory)
     docker stop api_build
   displayName: 'docker build api'
+  workingDirectory: src/api/
 
 - task: PublishTestResults@2
   inputs:
