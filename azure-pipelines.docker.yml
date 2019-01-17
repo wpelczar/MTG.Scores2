@@ -20,7 +20,7 @@ variables:
 
 steps:
 - script: |
-    docker build -f src/api/ci.build.yml -t $(imageName_api_build) .
+    docker build -f ci.build.yml -t $(imageName_api_build) .
     docker run --name api_build --rm -d $(imageName_api_build)
     docker cp api_build:/app/MTG.Scores2.Api.Tests/TestResults/testresults.trx $(System.DefaultWorkingDirectory)
     docker cp api_build:/out $(System.DefaultWorkingDirectory)
