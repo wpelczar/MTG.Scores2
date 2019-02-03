@@ -6,6 +6,8 @@ services:
       dockerfile: ./Dockerfile
     depends_on:
       - db
+    environment:
+        ConnectionStrings__MtgDatabase: "Data Source=db;Initial Catalog=MtgScores2;User=sa;Password=Your_password123;"
     networks:
       - app-net
   db:
