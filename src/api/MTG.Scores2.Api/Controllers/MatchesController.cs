@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Models;
 using MTG.Scores2.Api.ViewModels;
@@ -15,6 +16,7 @@ namespace MTG.Scores2.Api.Controllers
   {
     private IMapper _mapper;
     private IMatchRepository _matchRepository;
+    private ILogger<MatchesController> _logger;
 
     public MatchesController(IMatchRepository matchRepository, IMapper mapper)
     {
@@ -25,112 +27,75 @@ namespace MTG.Scores2.Api.Controllers
     [HttpGet("")]
     public async Task<IActionResult> Get()
     {
-      try
-      {
-        var matches = await _matchRepository.GetAllMatches();
+      var matches = await _matchRepository.GetAllMatches();
 
-        var matchesModels = _mapper.Map<IEnumerable<MatchViewModel>>(matches);
+      var matchesModels = _mapper.Map<IEnumerable<MatchViewModel>>(matches);
 
-        return Ok(matchesModels);
-      }
-      catch (Exception)
-      {
-      }
-
-      return StatusCode(StatusCodes.Status500InternalServerError);
+      return Ok(matchesModels);
     }
 
     [HttpGet("{id}", Name = "MatchGet"),]
     public async Task<IActionResult> Get(int id)
     {
-      try
-      {
-        var match = await _matchRepository.GetMatchById(id);
 
-        if (match == null)
-        {
-          return NotFound();
-        }
+      var match = await _matchRepository.GetMatchById(id);
 
-        var matchModel = _mapper.Map<MatchViewModel>(match);
-        return Ok(matchModel);
-      }
-      catch (Exception ex)
+      if (match == null)
       {
+        return NotFound();
       }
 
-      return StatusCode(StatusCodes.Status500InternalServerError);
+      var matchModel = _mapper.Map<MatchViewModel>(match);
+      return Ok(matchModel);
     }
 
     [HttpPost("")]
     public async Task<IActionResult> Post([FromBody]MatchViewModel matchModel)
     {
-      try
-      {
-        var match = _mapper.Map<Match>(matchModel);
-        _matchRepository.Add(match);
-        await _matchRepository.SaveAllAsync();
+      var match = _mapper.Map<Match>(matchModel);
+      _matchRepository.Add(match);
+      await _matchRepository.SaveAllAsync();
 
-        var newUri = Url.Link("MatchGet", new { id = match.ID });
-        matchModel.ID = match.ID;
+      var newUri = Url.Link("MatchGet", new { id = match.ID });
+      matchModel.ID = match.ID;
 
-        return Created(newUri, matchModel);
-      }
-      catch (Exception ex)
-      {
-      }
-
-      return StatusCode(StatusCodes.Status500InternalServerError);
+      _logger.LogInformation($"Match creaated. ID = {match.ID}");
+      return Created(newUri, matchModel);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody]MatchViewModel matchModel)
     {
-      try
-      {
-        var match = await _matchRepository.GetMatchById(id);
-        if (match == null)
-        {
-          return NotFound($"Match with id {id} not found");
-        }
 
-        _mapper.Map(matchModel, match);
-
-        if (await _matchRepository.SaveAllAsync())
-        {
-          return Ok(_mapper.Map<MatchViewModel>(match));
-        }
-      }
-      catch(Exception ex)
+      var match = await _matchRepository.GetMatchById(id);
+      if (match == null)
       {
+        return NotFound($"Match with id {id} not found");
       }
 
-      return BadRequest("Could not update match");
+      _mapper.Map(matchModel, match);
+
+      await _matchRepository.SaveAllAsync();
+      
+      _logger.LogInformation($"Match with id [{id}] succesfully updated");
+      return Ok(_mapper.Map<MatchViewModel>(match));
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      try
+      var match = await _matchRepository.GetMatchById(id);
+
+      if (match == null)
       {
-        var match = await _matchRepository.GetMatchById(id);
-
-        if (match == null)
-        {
-          return NotFound();
-        }
-
-        _matchRepository.Delete(match);
-        await _matchRepository.SaveAllAsync();
-
-        return Ok();
-
-      }
-      catch (Exception ex)
-      {
+        return NotFound();
       }
 
-      return StatusCode(StatusCodes.Status500InternalServerError);
+      _matchRepository.Delete(match);
+      await _matchRepository.SaveAllAsync();
+
+      _logger.LogInformation($"Match with id [{id}] deleted");
+      return Ok();
     }
   }
 }

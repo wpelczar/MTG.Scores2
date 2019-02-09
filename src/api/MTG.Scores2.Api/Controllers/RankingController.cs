@@ -21,16 +21,9 @@ namespace MTG.Scores2.Api.Controllers
     [HttpGet("")]
     public async Task<IActionResult> Get()
     {
-      try
-      {
-        var ranking = await _rankingProvider.GetRanking();
-        return Ok(ranking);
-      }
-      catch (Exception)
-      {
-      }
 
-      return StatusCode(StatusCodes.Status500InternalServerError);
+      var ranking = await _rankingProvider.GetRanking();
+      return Ok(ranking);
     }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.ViewModels;
 using System;
@@ -14,7 +15,7 @@ namespace MTG.Scores2.Api.Controllers
   {
     private IPlayerRepository _playerRepository;
     private IMapper _mapper;
-
+    
     public PlayersController(IPlayerRepository playerRepository, IMapper mapper)
     {
       _playerRepository = playerRepository;
@@ -24,18 +25,9 @@ namespace MTG.Scores2.Api.Controllers
     [HttpGet("")]
     public async Task<IActionResult> Get()
     {
-      try
-      {
-        var players = await _playerRepository.GetAllPlayers(false);
-        var playersModel = _mapper.Map<IEnumerable<PlayerViewModel>>(players);
-
-        return Ok(playersModel);
-      }
-      catch (Exception)
-      {
-      }
-
-      return StatusCode(StatusCodes.Status500InternalServerError);
+      var players = await _playerRepository.GetAllPlayers(false);
+      var playersModel = _mapper.Map<IEnumerable<PlayerViewModel>>(players);
+      return Ok(playersModel);
     }
   }
 }
