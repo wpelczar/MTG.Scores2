@@ -2,7 +2,7 @@ FROM node:10.15.0 AS build-env
 
 WORKDIR /app
 
-RUN npm install -g @angular/cli@6.1.5 --silent
+RUN npm install -g @angular/cli@7.3.3 --silent
 
 COPY MTG.Scores2.Web/package.json package.json
 
