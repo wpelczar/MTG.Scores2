@@ -18,10 +18,11 @@ namespace MTG.Scores2.Api.Controllers
     private IMatchRepository _matchRepository;
     private ILogger<MatchesController> _logger;
 
-    public MatchesController(IMatchRepository matchRepository, IMapper mapper)
+    public MatchesController(IMatchRepository matchRepository, IMapper mapper, ILogger<MatchesController> logger)
     {
       _matchRepository = matchRepository;
       _mapper = mapper;
+      _logger = logger;
     }
 
     [HttpGet("")]
@@ -59,7 +60,7 @@ namespace MTG.Scores2.Api.Controllers
       var newUri = Url.Link("MatchGet", new { id = match.ID });
       matchModel.ID = match.ID;
 
-      _logger.LogInformation($"Match creaated. ID = {match.ID}");
+      _logger.LogInformation($"Match created. ID = {match.ID}");
       return Created(newUri, matchModel);
     }
 
