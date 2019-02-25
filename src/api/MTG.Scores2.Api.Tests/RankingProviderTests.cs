@@ -37,43 +37,46 @@ namespace MTG.Scores2.Api.Tests
       var playerWith2Wins = new Player 
       { 
         Name = "vanilla",
+        ID = 1,
         AwayMatches = new List<Match>
         { 
-          new Match { Player1Score = 1, Player2Score = 2 },
-          new Match { Player1Score = 2, Player2Score = 0 },
+          new Match { Player1Score = 1, Player2Score = 2, Player1ID = 123, Player2ID = 1 },
+          new Match { Player1Score = 2, Player2Score = 0, Player1ID = 123, Player2ID = 1  },
         },
         HomeMatches = new List<Match>
         { 
-          new Match { Player1Score = 2, Player2Score = 1 },
-          new Match { Player1Score = 0, Player2Score = 2 },
+          new Match { Player1Score = 2, Player2Score = 1, Player1ID = 1, Player2ID = 123  },
+          new Match { Player1Score = 0, Player2Score = 2, Player1ID = 1, Player2ID = 123  },
         }
       };
       var playerWith0Wins = new Player 
       { 
         Name = "loser",
+        ID = 2,
         AwayMatches = new List<Match>
         { 
-          new Match { Player1Score = 2, Player2Score = 1 },
-          new Match { Player1Score = 2, Player2Score = 0 },
+          new Match { Player1Score = 2, Player2Score = 1, Player1ID = 123, Player2ID = 2  },
+          new Match { Player1Score = 2, Player2Score = 0, Player1ID = 123, Player2ID = 2  },
         },
         HomeMatches = new List<Match>
         { 
-          new Match { Player1Score = 1, Player2Score = 2 },
-          new Match { Player1Score = 0, Player2Score = 2 },
+          new Match { Player1Score = 1, Player2Score = 2, Player1ID = 2, Player2ID = 123  },
+          new Match { Player1Score = 0, Player2Score = 2, Player1ID = 2, Player2ID = 123  },
         }
       };
       var playerWith3Wins = new Player 
       { 
         Name = "master",
+        ID = 3,
         AwayMatches = new List<Match>
         { 
-          new Match { Player1Score = 0, Player2Score = 2 },
-          new Match { Player1Score = 2, Player2Score = 0 },
+          new Match { Player1Score = 0, Player2Score = 2, Player1ID = 123, Player2ID = 3  },
+          new Match { Player1Score = 2, Player2Score = 0, Player1ID = 123, Player2ID = 3  },
         },
         HomeMatches = new List<Match>
         { 
-          new Match { Player1Score = 2, Player2Score = 1 },
-          new Match { Player1Score = 2, Player2Score = 0 },
+          new Match { Player1Score = 2, Player2Score = 1, Player1ID = 3, Player2ID = 123  },
+          new Match { Player1Score = 2, Player2Score = 0, Player1ID = 3, Player2ID = 123  },
         }
       };
 
