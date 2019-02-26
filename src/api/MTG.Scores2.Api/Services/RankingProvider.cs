@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MTG.Scores2.Api.ViewModels;
 using MTG.Scores2.Api.DataAccess;
 using System.Linq;

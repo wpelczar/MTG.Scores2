@@ -12,14 +12,14 @@ namespace MTG.Scores2.Api.AutoMapper
         .ForMember(x => x.Player1, opt => opt.ResolveUsing(
           m => new PlayerScoreViewModel
           {
-            ID = m.Player1ID,
+            ID = m.Player1ID.Value,
             Name = m.Player1?.Name,
             Score = m.Player1Score
           }))
         .ForMember(x => x.Player2, opt => opt.ResolveUsing(
           m => new PlayerScoreViewModel
           {
-            ID = m.Player2ID,
+            ID = m.Player2ID.Value,
             Name = m.Player2?.Name,
             Score = m.Player2Score
           }))

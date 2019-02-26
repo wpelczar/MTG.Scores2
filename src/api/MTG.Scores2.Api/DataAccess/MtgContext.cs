@@ -14,11 +14,15 @@ namespace MTG.Scores2.Api.DataAccess
       modelBuilder.Entity<Player>().Ignore(p => p.Matches);
       modelBuilder.Entity<Match>().HasOne(m => m.Player1).WithMany(p => p.HomeMatches).HasForeignKey(m => m.Player1ID);
       modelBuilder.Entity<Match>().HasOne(m => m.Player2).WithMany(p => p.AwayMatches).HasForeignKey(m => m.Player2ID);
+      modelBuilder.Entity<Match>().HasOne(m => m.Tournament).WithMany(t => t.Matches).HasForeignKey(m => m.TournamentID);
+      modelBuilder.Entity<TournamentPlayer>().HasKey(tp => new { tp.TournamentId, tp.PlayerId });
       base.OnModelCreating(modelBuilder);
     }
 
     public DbSet<Match> Matches { get; set; }
 
     public DbSet<Player> Players { get; set; }
+
+    public DbSet<Tournament> Tournaments { get; set; }
   }
 }
