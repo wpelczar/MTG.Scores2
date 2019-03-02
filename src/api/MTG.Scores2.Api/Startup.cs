@@ -32,7 +32,8 @@ namespace MTG.Scores2.Api
       services.AddTransient<MtgContextSeedData>();
 
       services.AddTransient<IPlayerRepository, PlayerRepository>()
-              .AddTransient<IMatchRepository, MatchRepository>();
+              .AddTransient<IMatchRepository, MatchRepository>()
+              .AddTransient<ITournamentRepository, TournamentRepository>();
 
       services.AddTransient<IRankingProvider, RankingProvider>();
 

@@ -9,7 +9,7 @@ namespace MTG.Scores2.Api.DataAccess
     void Add(Match match);
     void Delete(Match match);
     Task<bool> SaveAllAsync();
-    Task<IEnumerable<Match>> GetAllMatches();
+    Task<List<Match>> GetAllMatches();
     Task<Match> GetMatchById(int id);
   }
 }

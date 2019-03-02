@@ -25,17 +25,17 @@ namespace MTG.Scores2.Api.DataAccess
       _context.Remove(match);
     }
 
-    public async Task<IEnumerable<Match>> GetAllMatches()
+    public Task<List<Match>> GetAllMatches()
     {
-      return await _context.Matches
+      return _context.Matches
         .Include(m => m.Player1)
         .Include(m => m.Player2)
         .ToListAsync();
     }
 
-    public async Task<Match> GetMatchById(int id)
+    public Task<Match> GetMatchById(int id)
     {
-      return await _context.Matches
+      return _context.Matches
         .Include(m => m.Player1)
         .Include(m => m.Player2)
         .FirstOrDefaultAsync(m => m.ID == id);
