@@ -15,6 +15,7 @@ import { MatchService } from './shared/services/match.service';
 import { PlayerService } from './shared/services/player.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
+import { TournamentsComponent } from './tournaments/tournaments.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,15 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component';
     ScoresComponent,
     EditMatchDialogComponent,
     DeleteConfirmationDialogComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    TournamentsComponent
   ],
   imports: [
     RouterModule.forRoot([
       { path: '', redirectTo: 'ranking', pathMatch: 'full' },
-      { path: 'ranking', component: RankingComponent, data: {title: 'Tabela'} },
-      { path: 'scores', component: ScoresComponent, data: {title: 'Wyniki' } },
+      { path: 'ranking', component: RankingComponent, data: { title: 'Tabela' } },
+      { path: 'scores', component: ScoresComponent, data: { title: 'Wyniki' } },
+      { path: 'tournaments', component: TournamentsComponent, data: { title: 'Turnieje' } },
       { path: '**', redirectTo: 'ranking' }
     ]),
     BrowserModule,

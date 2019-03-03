@@ -27,7 +27,7 @@ export class MatchService {
       }, (errorResponse: Response) => this.handleError(errorResponse));
   }
 
-  deleteMatch(id): void {
+  deleteMatch(id: number): void {
     this._http.delete(this._matchUrl + '/' + id)
       .subscribe(response => {
         const newData = this.dataChange.value.filter(m => m.id !== id);
@@ -54,7 +54,6 @@ export class MatchService {
       });
   }
 
-  // przypisanie meczu z reponse
   editMatch(match: IMatch): void {
     this._http.put(this._matchUrl + '/' + match.id, match)
       .subscribe(response => {
