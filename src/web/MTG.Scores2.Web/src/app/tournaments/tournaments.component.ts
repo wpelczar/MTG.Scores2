@@ -23,6 +23,10 @@ export class TournamentsComponent implements OnInit {
     this.tournamentsDataSource = new TournamentDataSource(this._tournamentService);
     this._tournamentService.getTournaments();
   }
+
+  applyFilter(filterValue: string) {
+    this.tournamentsDataSource.filter = filterValue;
+  }
 }
 
 export class TournamentDataSource extends DataSource<ITournament> {
