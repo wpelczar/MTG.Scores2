@@ -1,3 +1,7 @@
+<button id="add-tournament-button" mat-fab color="accent" [routerLinkActive]="['link-active']" [routerLink]="['/new-tournament']">
+  <mat-icon>add</mat-icon>
+</button>
+
 <div class="mat-elevation-z table-wrapper">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtr">
@@ -14,18 +18,18 @@
       <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
       <mat-cell *matCellDef="let tournament"> {{tournament.id}} </mat-cell>
     </ng-container>
-<!-- 
+
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let tournament">
-        <button mat-icon-button (click)="edit(tournament)">
+        <!-- <button mat-icon-button (click)="edit(tournament)">
           <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
+        </button> -->
         <button mat-icon-button color="warn" (click)="delete(tournament.id)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
-    </ng-container> -->
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

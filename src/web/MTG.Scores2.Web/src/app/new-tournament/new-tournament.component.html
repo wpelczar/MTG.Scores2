@@ -1,0 +1,10 @@
+<form [formGroup]="tournamentForm" (ngSubmit)="save()">
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Nazwa" formControlName="name">
+    </mat-form-field>
+  </div>
+  <div>
+    <button [disabled]="!tournamentForm.valid" mat-raised-button color="primary" type="submit">Dodaj</button>
+  </div>
+</form>

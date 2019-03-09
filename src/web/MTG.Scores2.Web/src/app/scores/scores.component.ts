@@ -10,6 +10,7 @@ import { DeleteConfirmationDialogComponent } from '../shared/delete-confirmation
 import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { merge, map } from 'rxjs/operators';
+import { IDeleteConfirmationDialogData } from '../shared/models/delete-confirmation-dialog-data';
 
 @Component({
   selector: 'app-scores',
@@ -80,11 +81,16 @@ export class ScoresComponent implements OnInit {
 
   delete(id: number): void {
     const dialogRef = this._dialog.open(
-      DeleteConfirmationDialogComponent);
+      DeleteConfirmationDialogComponent, {
+        data: <IDeleteConfirmationDialogData>{
+          title: 'Usuwanie meczu',
+          text: 'Na pewno chcesz usunąć mecz?'
+        }
+      });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Result is ${JSON.stringify(result)}`);
-      if (result !== undefined) {
+      if (result === true) {
         this._matchService.deleteMatch(id);
       }
     });

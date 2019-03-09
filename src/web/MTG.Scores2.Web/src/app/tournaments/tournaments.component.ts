@@ -4,6 +4,9 @@ import { ITournament } from '../shared/models/tournament';
 import { DataSource } from '@angular/cdk/table';
 import { TournamentService } from '../shared/services/tournament.service';
 import { map, merge } from 'rxjs/operators';
+import { IDeleteConfirmationDialogData } from '../shared/models/delete-confirmation-dialog-data';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from '../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-tournaments',
@@ -12,12 +15,12 @@ import { map, merge } from 'rxjs/operators';
 })
 export class TournamentsComponent implements OnInit {
   tournamentsDataSource: TournamentDataSource | null;
-  displayedColumns = ['ID', 'name'];
+  displayedColumns = ['ID', 'name', 'actions'];
   errorMessage: string;
   filterChange = new BehaviorSubject('');
 
 
-  constructor(private _tournamentService: TournamentService) { }
+  constructor(private _tournamentService: TournamentService, private _dialog: MatDialog) { }
 
   ngOnInit() {
     this.tournamentsDataSource = new TournamentDataSource(this._tournamentService);
@@ -26,6 +29,23 @@ export class TournamentsComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.tournamentsDataSource.filter = filterValue;
+  }
+
+  delete(id: number): void {
+    const dialogRef = this._dialog.open(
+      DeleteConfirmationDialogComponent, {
+        data: <IDeleteConfirmationDialogData>{
+          title: 'Usuwanie turnieju',
+          text: 'Na pewno chcesz usunąć turniej?'
+        }
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(`Result is ${JSON.stringify(result)}`);
+      if (result === true) {
+        this._tournamentService.delete(id);
+      }
+    });
   }
 }
 

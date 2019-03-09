@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ITournament } from '../models/tournament';
-import { map, catchError, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class TournamentService {
 
   get data(): ITournament[] { return this.dataChange.value; }
 
-  constructor(private _http: Http) {
+  constructor(private _http: Http, private _snackBar: MatSnackBar) {
     this._tournamentUrl = environment.apiUrl + '/tournaments';
   }
 
@@ -28,18 +28,28 @@ export class TournamentService {
   }
 
   addTournament(tournament: ITournament): void {
-    this._http.post(this._tournamentUrl + '/' + tournament.id, tournament)
-      .pipe(
-        map((response: Response) => <ITournament[]>response.json()),
-        tap(createdTournament => {
-          const newData = this.data.concat(createdTournament);
-          this.dataChange.next(newData);
-        }),
-        catchError(this.handleError)
-      );
+    this._http.post(this._tournamentUrl, tournament)
+      .subscribe((response: Response) => {
+        const createdTournament = <ITournament>response.json();
+        const newData = this.data.concat(createdTournament);
+        this.dataChange.next(newData);
+      }, (errorResponse: Response) => this.handleError(errorResponse));
   }
 
-  handleError(error: Response) {
+  delete(id: number): void {
+    this._http.delete(this._tournamentUrl + '/' + id)
+      .subscribe(response => {
+        const newData = this.dataChange.value.filter(m => m.id !== id);
+        this.dataChange.next(newData);
+        this._snackBar.open('Turniej usunięty', 'OK', {
+          duration: 2000
+        });
+      }, errorResponse => {
+        this.handleError(errorResponse);
+      });
+  }
+
+  private handleError(error: Response) {
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
   }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Models;
 using MTG.Scores2.Api.ViewModels;
@@ -14,11 +15,16 @@ namespace MTG.Scores2.Api.Controllers
   {
     private readonly ITournamentRepository _tournamentRepository;
     private readonly IMapper _mapper;
+    private ILogger<TournamentsController> _logger;
 
-    public TournamentsController(ITournamentRepository tournamentRepository, IMapper mapper)
+    public TournamentsController(
+      ITournamentRepository tournamentRepository,
+      IMapper mapper,
+      ILogger<TournamentsController> logger)
     {
       _tournamentRepository = tournamentRepository;
       _mapper = mapper;
+      _logger = logger;
     }
 
     [HttpGet("")]
@@ -49,7 +55,7 @@ namespace MTG.Scores2.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> Post([FromBody]TournamentViewModel tournamentViewModel)
     {
-      var tournament =_mapper.Map<Tournament>(tournamentViewModel);
+      var tournament = _mapper.Map<Tournament>(tournamentViewModel);
       _tournamentRepository.Add(tournament);
       await _tournamentRepository.SaveAllAsync();
 
@@ -57,6 +63,23 @@ namespace MTG.Scores2.Api.Controllers
       tournamentViewModel.ID = tournament.ID;
 
       return Created(newUri, tournamentViewModel);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+      var tournament = await _tournamentRepository.Get(id);
+
+      if (tournament == null)
+      {
+        return NotFound();
+      }
+
+      _tournamentRepository.Delete(tournament);
+      await _tournamentRepository.SaveAllAsync();
+
+      _logger.LogInformation($"Tournament with id {id} deleted");
+      return Ok();
     }
   }
 }
