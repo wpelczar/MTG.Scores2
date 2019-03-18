@@ -1,10 +1,32 @@
-<form [formGroup]="tournamentForm" (ngSubmit)="save()">
-  <div>
-    <mat-form-field>
-      <input matInput placeholder="Nazwa" formControlName="name">
-    </mat-form-field>
-  </div>
-  <div>
-    <button [disabled]="!tournamentForm.valid" mat-raised-button color="primary" type="submit">Dodaj</button>
-  </div>
-</form>
+<div class="tournament-form">
+  <form [formGroup]="tournamentForm" (ngSubmit)="save()">
+    <div>
+      <h2 class="heading">Informacje ogólne</h2>
+      <mat-form-field>
+        <input matInput placeholder="Nazwa" formControlName="name">
+      </mat-form-field>
+      <h2 class="heading">Uczestnicy</h2>
+      <div formArrayName="participants" *ngFor="let participantControl of tournamentForm.get('participants').controls; let i = index">
+        <div [formGroupName]="i">
+          <div class="form-group">
+            <div >
+              <mat-form-field>
+                <input matInput type="text" placeholder="Uczestnik {{i+1}}" formControlName="name">
+              </mat-form-field>
+              <button mat-icon-button color="warn" type="button" (click)="removeParticipant(i)">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button type="button" mat-button (click)="addParticipant()">
+          Dodaj kolejnego uczestnika
+        </button>
+    </div>
+    <div class="submit-group">
+      <button [disabled]="!tournamentForm.valid" mat-raised-button color="primary" type="submit">Zapisz turniej</button>
+    </div>
+  </form>
+</div>
