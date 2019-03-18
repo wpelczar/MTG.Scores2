@@ -1,7 +1,7 @@
-import { IPlayer } from './player';
+import { IParticipant } from './participant';
 
 export interface ITournament {
   id: number;
   name: string;
-  participants: IPlayer[];
+  participants: IParticipant[];
 }

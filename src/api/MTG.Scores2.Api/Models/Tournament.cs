@@ -8,8 +8,8 @@ namespace MTG.Scores2.Api.Models
 
     public string Name { get; set; }
 
-    public ICollection<Match> Matches { get; set; }
+    //public ICollection<Match> Matches { get; set; }
 
-    public ICollection<TournamentPlayer> TournamentPlayers { get; set; }
+    public ICollection<Participant> Participants { get; set; }
   }
 }

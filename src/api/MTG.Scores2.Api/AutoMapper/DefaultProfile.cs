@@ -35,9 +35,14 @@ namespace MTG.Scores2.Api.AutoMapper
       CreateMap<Player, PlayerViewModel>().ReverseMap();
 
       CreateMap<Tournament, TournamentViewModel>()
+        .ReverseMap();
+
+      CreateMap<Participant, ParticipantViewModel>()
         .ReverseMap()
-        .ForMember(x => x.Matches, opt => opt.Ignore())
-        .ForMember(x => x.TournamentPlayers, opt => opt.Ignore());
+        .ForMember(x => x.ID, opt => opt.Ignore())
+        .ForMember(x => x.Tournament, opt => opt.Ignore())
+        .ForMember(x => x.TournamentId, opt => opt.Ignore());
+
     }
   }
 }

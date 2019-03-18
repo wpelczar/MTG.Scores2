@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MTG.Scores2.Api.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,17 @@ namespace MTG.Scores2.Api.DataAccess
     }
     public Task<Player> GetPlayerById(int id)
     {
-      return _context.Players.Where(p => p.ID == id).FirstOrDefaultAsync();
+      throw new NotImplementedException();
+      //return _context.Players.Where(p => p.ID == id).FirstOrDefaultAsync();
     }
 
     public async Task<IEnumerable<Player>> GetAllPlayers(bool includeMatches)
     {
-      return includeMatches
-        ? await _context.Players.Include(p => p.HomeMatches).Include(p => p.AwayMatches).ToListAsync()
-        : await _context.Players.ToListAsync();
+      throw new NotImplementedException();
+
+      //return includeMatches
+      //  ? await _context.Players.Include(p => p.HomeMatches).Include(p => p.AwayMatches).ToListAsync()
+      //  : await _context.Players.ToListAsync();
     }
   }
 }

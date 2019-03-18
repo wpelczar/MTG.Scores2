@@ -14,7 +14,5 @@ namespace MTG.Scores2.Api.Models
     public virtual ICollection<Match> AwayMatches { get; set; }
 
     public IEnumerable<Match> Matches => HomeMatches.Concat(AwayMatches).Distinct();
-
-    public virtual ICollection<TournamentPlayer> TournamentPlayers { get; set; }
   }
 }

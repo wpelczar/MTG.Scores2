@@ -27,18 +27,22 @@ namespace MTG.Scores2.Api.DataAccess
 
     public Task<List<Match>> GetAllMatches()
     {
-      return _context.Matches
-        .Include(m => m.Player1)
-        .Include(m => m.Player2)
-        .ToListAsync();
+      throw new NotImplementedException();
+
+      //return _context.Matches
+      //  .Include(m => m.Player1)
+      //  .Include(m => m.Player2)
+      //  .ToListAsync();
     }
 
     public Task<Match> GetMatchById(int id)
     {
-      return _context.Matches
-        .Include(m => m.Player1)
-        .Include(m => m.Player2)
-        .FirstOrDefaultAsync(m => m.ID == id);
+      throw new NotImplementedException();
+
+      //return _context.Matches
+      //  .Include(m => m.Player1)
+      //  .Include(m => m.Player2)
+      //  .FirstOrDefaultAsync(m => m.ID == id);
     }
 
     public async Task<bool> SaveAllAsync()
