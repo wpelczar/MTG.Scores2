@@ -8,6 +8,6 @@ namespace MTG.Scores2.Api.ViewModels
 
     public string Name { get; set; }
 
-    public List<ParticipantViewModel> Participants { get; set; }
+    public List<PlayerViewModel> Participants { get; set; }
   }
 }
