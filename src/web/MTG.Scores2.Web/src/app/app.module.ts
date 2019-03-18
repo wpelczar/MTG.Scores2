@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
+import { TournamentDetailsComponent } from './tournament-details/tournament-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NewTournamentComponent } from './new-tournament/new-tournament.componen
     DeleteConfirmationDialogComponent,
     ToolbarComponent,
     TournamentsComponent,
-    NewTournamentComponent
+    NewTournamentComponent,
+    TournamentDetailsComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -36,6 +38,7 @@ import { NewTournamentComponent } from './new-tournament/new-tournament.componen
       { path: 'scores', component: ScoresComponent, data: { title: 'Wyniki' } },
       { path: 'tournaments', component: TournamentsComponent, data: { title: 'Turnieje' } },
       { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' } },
+      { path: 'tournament-details/:id', component: TournamentDetailsComponent} ,
       { path: '**', redirectTo: 'ranking' }
     ]),
     BrowserModule,

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ITournament } from '../models/tournament';
 import { MatSnackBar } from '@angular/material';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,13 @@ export class TournamentService {
 
   constructor(private _http: Http, private _snackBar: MatSnackBar) {
     this._tournamentUrl = environment.apiUrl + '/tournaments';
+  }
+
+  getTournament(id: number): Observable<ITournament>{
+    return this._http.get(this._tournamentUrl + '/' + id)
+    .pipe(
+      map((response: Response) => <ITournament> response.json())
+    );
   }
 
   getTournaments(): void {
