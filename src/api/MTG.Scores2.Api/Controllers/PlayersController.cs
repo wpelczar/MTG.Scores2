@@ -25,9 +25,10 @@ namespace MTG.Scores2.Api.Controllers
     [HttpGet("")]
     public async Task<IActionResult> Get()
     {
-      var players = await _playerRepository.GetAllPlayers(false);
-      var playersModel = _mapper.Map<IEnumerable<PlayerViewModel>>(players);
-      return Ok(playersModel);
+      throw new NotImplementedException();
+      //var players = await _playerRepository.GetAllPlayers(false);
+      //var playersModel = _mapper.Map<IEnumerable<PlayerViewModel>>(players);
+      //return Ok(playersModel);
     }
   }
 }

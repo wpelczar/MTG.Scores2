@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MTG.Scores2.Api.Controllers
 {
-  [Route("api/ranking")]
+
   public class RankingController : Controller
   {
     private IRankingProvider _rankingProvider;
@@ -18,11 +18,11 @@ namespace MTG.Scores2.Api.Controllers
       _rankingProvider = rankingProvider;
     }
 
-    [HttpGet("")]
-    public async Task<IActionResult> Get()
+    [HttpGet("api/tournaments/{id}/ranking")]
+    public async Task<IActionResult> Get(int id)
     {
 
-      var ranking = await _rankingProvider.GetRanking();
+      var ranking = await _rankingProvider.GetRanking(id);
       return Ok(ranking);
     }
   }

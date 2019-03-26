@@ -6,7 +6,7 @@ namespace MTG.Scores2.Api.DataAccess
 {
   public interface IPlayerRepository
   {
-    Task<IEnumerable<Player>> GetAllPlayers(bool includeMatches);
     Task<Player> GetPlayerById(int id);
+    Task<IEnumerable<Player>> GetAllParticipants(int tournamentId, bool includeMatches);
   }
 }

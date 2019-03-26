@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { IRankingRecord } from '../shared/models/ranking-record';
 import { RankingService } from '../shared/services/ranking.service';
 
@@ -8,6 +8,8 @@ import { RankingService } from '../shared/services/ranking.service';
   selector: 'app-ranking'
 })
 export class RankingComponent implements OnInit {
+  @Input() tournamentId: number;
+
   ranking: IRankingRecord[];
   errorMessage: string;
   displayedColumns = ['position', 'name', 'matches', 'wonMatches', 'lostMatches', 'wonPoints', 'lostPoints'];
@@ -15,7 +17,7 @@ export class RankingComponent implements OnInit {
   constructor(private _rankigService: RankingService) {}
 
   ngOnInit(): void {
-    this._rankigService.getRanking()
+    this._rankigService.getRanking(this.tournamentId)
         .subscribe(rankingRecords => this.ranking = rankingRecords,
             error => this.errorMessage = <any>error);
   }

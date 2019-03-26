@@ -7,6 +7,6 @@ namespace MTG.Scores2.Api.Services
 {
   public interface IRankingProvider
   {
-    Task<IEnumerable<RankingRecordViewModel>> GetRanking();
+    Task<IEnumerable<RankingRecordViewModel>> GetRanking(int tournamentId);
   }
 }

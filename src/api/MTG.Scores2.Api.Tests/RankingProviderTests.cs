@@ -34,6 +34,7 @@ namespace MTG.Scores2.Api.Tests
     [Test]
     public async Task GetRanking_ShoulReturnOrderedResults()
     {
+      int tournamentId = 123;
       var playerWith2Wins = new Player 
       { 
         Name = "vanilla",
@@ -81,9 +82,9 @@ namespace MTG.Scores2.Api.Tests
       };
 
       IEnumerable<Player> players = new List<Player> { playerWith3Wins, playerWith0Wins, playerWith2Wins };
-      _playerReposityoryMock.Setup(x => x.GetAllPlayers(true)).Returns(Task.FromResult(players));
+      _playerReposityoryMock.Setup(x => x.GetAllParticipants(tournamentId, true)).Returns(Task.FromResult(players));
 
-      var result = (await _sut.GetRanking()).ToList();
+      var result = (await _sut.GetRanking(tournamentId)).ToList();
 
       Assert.AreEqual(playerWith3Wins.Name, result[0].Name);
       Assert.AreEqual(playerWith2Wins.Name, result[1].Name);

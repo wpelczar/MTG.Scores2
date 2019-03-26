@@ -1,4 +1,12 @@
   tournament-details works! ID: {{id}}
   <div *ngIf="tournament">
       Nazwa: {{tournament.name}}
+      <mat-tab-group>
+        <mat-tab label="Ranking">
+          <app-ranking tournamentId={{tournament.id}}>   
+          </app-ranking>
+        </mat-tab>
+        <mat-tab label="Mecze"> Content 2 </mat-tab>
+        <mat-tab label="Uczestnicy"> Content 3 </mat-tab>
+      </mat-tab-group>
   </div>

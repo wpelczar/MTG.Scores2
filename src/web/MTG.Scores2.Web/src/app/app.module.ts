@@ -18,6 +18,7 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
 import { TournamentDetailsComponent } from './tournament-details/tournament-details.component';
+import { TournamentService } from './shared/services/tournament.service';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,7 @@ import { TournamentDetailsComponent } from './tournament-details/tournament-deta
   ],
   imports: [
     RouterModule.forRoot([
-      { path: '', redirectTo: 'ranking', pathMatch: 'full' },
-      { path: 'ranking', component: RankingComponent, data: { title: 'Tabela' } },
-      { path: 'scores', component: ScoresComponent, data: { title: 'Wyniki' } },
+      { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
       { path: 'tournaments', component: TournamentsComponent, data: { title: 'Turnieje' } },
       { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' } },
       { path: 'tournament-details/:id', component: TournamentDetailsComponent} ,
@@ -52,7 +51,8 @@ import { TournamentDetailsComponent } from './tournament-details/tournament-deta
   providers: [
     RankingService,
     MatchService,
-    PlayerService
+    PlayerService,
+    TournamentService
   ],
   entryComponents: [EditMatchDialogComponent, DeleteConfirmationDialogComponent],
   bootstrap: [AppComponent]

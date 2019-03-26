@@ -15,9 +15,9 @@ namespace MTG.Scores2.Api.Services
       _playerRepository = playerRepository;
     }
 
-    public async Task<IEnumerable<RankingRecordViewModel>> GetRanking()
+    public async Task<IEnumerable<RankingRecordViewModel>> GetRanking(int tournamentId)
     {
-      var players = await _playerRepository.GetAllPlayers(true);
+      var players = await _playerRepository.GetAllParticipants(tournamentId, true);
       
       var rank = new List<RankingRecordViewModel>();
 

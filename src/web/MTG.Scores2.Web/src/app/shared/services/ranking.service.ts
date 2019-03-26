@@ -8,14 +8,11 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class RankingService {
-  private _rankingUrl;
-
   constructor(private _http: Http) {
-    this._rankingUrl = environment.apiUrl + '/ranking';
   }
 
-  getRanking(): Observable<IRankingRecord[]> {
-    return this._http.get(this._rankingUrl)
+  getRanking(tournamentId: number): Observable<IRankingRecord[]> {
+    return this._http.get(environment.apiUrl + '/tournaments/' + tournamentId + '/ranking')
     .pipe(
       map((response: Response) => <IRankingRecord[]>response.json()),
       tap(data => console.log(data)),

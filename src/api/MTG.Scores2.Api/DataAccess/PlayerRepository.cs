@@ -18,17 +18,16 @@ namespace MTG.Scores2.Api.DataAccess
     }
     public Task<Player> GetPlayerById(int id)
     {
-      throw new NotImplementedException();
-      //return _context.Players.Where(p => p.ID == id).FirstOrDefaultAsync();
+      return _context.Players.Where(p => p.ID == id).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Player>> GetAllPlayers(bool includeMatches)
+    public async Task<IEnumerable<Player>> GetAllParticipants(int tournamentId, bool includeMatches)
     {
-      throw new NotImplementedException();
+      var playersQuery =_context.Players.Where(p => p.TournamentId == tournamentId);
 
-      //return includeMatches
-      //  ? await _context.Players.Include(p => p.HomeMatches).Include(p => p.AwayMatches).ToListAsync()
-      //  : await _context.Players.ToListAsync();
+      return includeMatches
+        ? await playersQuery.Include(p => p.HomeMatches).Include(p => p.AwayMatches).ToListAsync()
+        : await playersQuery.ToListAsync();
     }
   }
 }
