@@ -3,6 +3,7 @@ using MTG.Scores2.Api.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace MTG.Scores2.Api.DataAccess
 {
@@ -25,24 +26,22 @@ namespace MTG.Scores2.Api.DataAccess
       _context.Remove(match);
     }
 
-    public Task<List<Match>> GetAllMatches()
+    public Task<List<Match>> GetAllMatches(int tournamnetId)
     {
-      throw new NotImplementedException();
-
-      //return _context.Matches
-      //  .Include(m => m.Player1)
-      //  .Include(m => m.Player2)
-      //  .ToListAsync();
+      return _context.Matches
+        .Where(x => x.TournamentID == tournamnetId)
+        .Include(m => m.Player1)
+        .Include(m => m.Player2)
+        .ToListAsync();
     }
 
-    public Task<Match> GetMatchById(int id)
+    public Task<Match> GetMatchById(int tournamentId, int id)
     {
-      throw new NotImplementedException();
-
-      //return _context.Matches
-      //  .Include(m => m.Player1)
-      //  .Include(m => m.Player2)
-      //  .FirstOrDefaultAsync(m => m.ID == id);
+      return _context.Matches
+        .Where(x => x.TournamentID == tournamentId)
+        .Include(m => m.Player1)
+        .Include(m => m.Player2)
+        .FirstOrDefaultAsync(m => m.ID == id);
     }
 
     public async Task<bool> SaveAllAsync()

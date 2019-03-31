@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Models;
 using MTG.Scores2.Api.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MTG.Scores2.Api.Controllers
 {
-  [Route("api/matches")]
+  [Route("api/tournaments/{tournamentId}/matches")]
   public class MatchesController : Controller
   {
     private IMapper _mapper;
@@ -26,9 +24,9 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpGet("")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(int tournamentId)
     {
-      var matches = await _matchRepository.GetAllMatches();
+      var matches = await _matchRepository.GetAllMatches(tournamentId);
 
       var matchesModels = _mapper.Map<IEnumerable<MatchViewModel>>(matches);
 
@@ -36,10 +34,10 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpGet("{id}", Name = "MatchGet"),]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get(int tournamentid, int id)
     {
 
-      var match = await _matchRepository.GetMatchById(id);
+      var match = await _matchRepository.GetMatchById(tournamentid, id);
 
       if (match == null)
       {
@@ -51,9 +49,10 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> Post([FromBody]MatchViewModel matchModel)
+    public async Task<IActionResult> Post(int tournamentId, [FromBody]MatchViewModel matchModel)
     {
       var match = _mapper.Map<Match>(matchModel);
+      match.TournamentID = tournamentId;
       _matchRepository.Add(match);
       await _matchRepository.SaveAllAsync();
 
@@ -65,16 +64,17 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody]MatchViewModel matchModel)
+    public async Task<IActionResult> Put(int tournamentId, int id, [FromBody]MatchViewModel matchModel)
     {
 
-      var match = await _matchRepository.GetMatchById(id);
+      var match = await _matchRepository.GetMatchById(tournamentId, id);
       if (match == null)
       {
         return NotFound($"Match with id {id} not found");
       }
 
       _mapper.Map(matchModel, match);
+      match.TournamentID = tournamentId;
 
       await _matchRepository.SaveAllAsync();
       
@@ -83,9 +83,9 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int tournamentId, int id)
     {
-      var match = await _matchRepository.GetMatchById(id);
+      var match = await _matchRepository.GetMatchById(tournamentId, id);
 
       if (match == null)
       {

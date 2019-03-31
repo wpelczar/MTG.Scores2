@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { IMatch } from '../shared/models/match';
 import { MatchService } from '../shared/services/match.service';
 import { IPlayer } from '../shared/models/player';
@@ -26,18 +26,20 @@ export class ScoresComponent implements OnInit {
   displayedColumns = ['player1.name', 'score', 'player2.name', 'actions'];
   filterChange = new BehaviorSubject('');
 
+  @Input() tournamentId: number;
+
   constructor(private _matchService: MatchService,
     private _playerService: PlayerService,
     private _dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this._playerService.getPlayers()
+    this._playerService.getParticipants(this.tournamentId)
       .subscribe(players => this.players = players,
       error => this.errorMessage = <any>error);
 
     this.matchesDataSource = new MatchesDataSource(this._matchService);
-    this._matchService.getMatches();
+    this._matchService.getMatches(this.tournamentId);
   }
 
   applyFilter(filterValue: string) {
@@ -74,7 +76,7 @@ export class ScoresComponent implements OnInit {
           }
         };
 
-        this._matchService.editMatch(matchEditModel);
+        this._matchService.editMatch(this.tournamentId, matchEditModel);
       }
     });
   }
@@ -91,7 +93,7 @@ export class ScoresComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Result is ${JSON.stringify(result)}`);
       if (result === true) {
-        this._matchService.deleteMatch(id);
+        this._matchService.deleteMatch(this.tournamentId, id);
       }
     });
   }
@@ -123,7 +125,7 @@ export class ScoresComponent implements OnInit {
           }
         };
 
-        this._matchService.addMatch(match);
+        this._matchService.addMatch(this.tournamentId, match);
       }
     });
   }
