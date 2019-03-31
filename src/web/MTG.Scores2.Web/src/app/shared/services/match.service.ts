@@ -8,9 +8,11 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class MatchService {
-  dataChange: BehaviorSubject<IMatch[]> = new BehaviorSubject<IMatch[]>([]);
+  private _dataChange: BehaviorSubject<IMatch[]> = new BehaviorSubject<IMatch[]>([]);
 
-  get data(): IMatch[] { return this.dataChange.value; }
+  public readonly dataChange = this._dataChange.asObservable();
+
+  get data(): IMatch[] { return this._dataChange.value; }
 
   constructor(private _http: Http,
     private _snackBar: MatSnackBar) {
@@ -20,15 +22,15 @@ export class MatchService {
     this._http.get(environment.apiUrl + '/tournaments/' + tournamentId + '/matches' )
       .subscribe((response: Response) => {
         const matches = <IMatch[]>response.json();
-        this.dataChange.next(matches);
+        this._dataChange.next(matches);
       }, (errorResponse: Response) => this.handleError(errorResponse));
   }
 
   deleteMatch(tournamentId:number, id: number): void {
     this._http.delete(environment.apiUrl + '/tournaments/' + tournamentId + '/matches/' + id)
       .subscribe(response => {
-        const newData = this.dataChange.value.filter(m => m.id !== id);
-        this.dataChange.next(newData);
+        const newData = this._dataChange.value.filter(m => m.id !== id);
+        this._dataChange.next(newData);
         this._snackBar.open('Mecz usunięty', 'OK', {
           duration: 2000
         });
@@ -41,8 +43,8 @@ export class MatchService {
     this._http.post((environment.apiUrl + '/tournaments/' + tournamentId + '/matches' ), match)
       .subscribe(response => {
         const createdMatch = <IMatch>(JSON.parse(response.text()));
-        const newdata = this.dataChange.value.concat(createdMatch);
-        this.dataChange.next(newdata);
+        const newdata = this._dataChange.value.concat(createdMatch);
+        this._dataChange.next(newdata);
         this._snackBar.open('Mecz dodany', 'OK', {
           duration: 2000
         });
@@ -54,7 +56,7 @@ export class MatchService {
   editMatch(tournamentId: number, match: IMatch): void {
     this._http.put((environment.apiUrl + '/tournaments/' + tournamentId + '/matches/' + match.id ), match)
       .subscribe(response => {
-        const copiedData = this.dataChange.value.slice();
+        const copiedData = this._dataChange.value.slice();
         const index = copiedData.findIndex(elem => elem.id === match.id);
         Object.assign(copiedData[index], match);
         this._snackBar.open('Edycja zapisana', 'OK', {

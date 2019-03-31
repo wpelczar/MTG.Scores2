@@ -19,6 +19,7 @@ import { TournamentsComponent } from './tournaments/tournaments.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
 import { TournamentDetailsComponent } from './tournament-details/tournament-details.component';
 import { TournamentService } from './shared/services/tournament.service';
+import { ParticipantsComponent } from './participants/participants.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TournamentService } from './shared/services/tournament.service';
     ToolbarComponent,
     TournamentsComponent,
     NewTournamentComponent,
-    TournamentDetailsComponent
+    TournamentDetailsComponent,
+    ParticipantsComponent
   ],
   imports: [
     RouterModule.forRoot([

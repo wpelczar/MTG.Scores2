@@ -12,9 +12,11 @@ import { map } from 'rxjs/operators';
 export class TournamentService {
   private _tournamentUrl;
 
-  dataChange: BehaviorSubject<ITournament[]> = new BehaviorSubject<ITournament[]>([]);
+  private _dataChange: BehaviorSubject<ITournament[]> = new BehaviorSubject<ITournament[]>([]);
 
-  get data(): ITournament[] { return this.dataChange.value; }
+  public readonly dataChange: Observable<ITournament[]> = this._dataChange.asObservable();
+
+  get data(): ITournament[] { return this._dataChange.value; }
 
   constructor(private _http: Http, private _snackBar: MatSnackBar) {
     this._tournamentUrl = environment.apiUrl + '/tournaments';
@@ -31,7 +33,7 @@ export class TournamentService {
     this._http.get(this._tournamentUrl)
       .subscribe((response: Response) => {
         const tournaments = <ITournament[]>response.json();
-        this.dataChange.next(tournaments);
+        this._dataChange.next(tournaments);
       }, (errorResponse: Response) => this.handleError(errorResponse));
   }
 
@@ -40,15 +42,15 @@ export class TournamentService {
       .subscribe((response: Response) => {
         const createdTournament = <ITournament>response.json();
         const newData = this.data.concat(createdTournament);
-        this.dataChange.next(newData);
+        this._dataChange.next(newData);
       }, (errorResponse: Response) => this.handleError(errorResponse));
   }
 
   delete(id: number): void {
     this._http.delete(this._tournamentUrl + '/' + id)
       .subscribe(response => {
-        const newData = this.dataChange.value.filter(m => m.id !== id);
-        this.dataChange.next(newData);
+        const newData = this._dataChange.value.filter(m => m.id !== id);
+        this._dataChange.next(newData);
         this._snackBar.open('Turniej usunięty', 'OK', {
           duration: 2000
         });

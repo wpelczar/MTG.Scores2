@@ -1,0 +1,42 @@
+<!-- <button id="add-match-button" mat-fab color="accent" (click)="openAddMatchDialog()">
+  <mat-icon>add</mat-icon>
+</button> -->
+
+<div class="mat-elevation-z table-wrapper">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtr">
+      </mat-form-field>
+
+  <mat-table #table [dataSource]="participantsDataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Nazwa </mat-header-cell>
+      <mat-cell *matCellDef="let participant"> {{participant.name}} </mat-cell>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="score">
+      <mat-header-cell *matHeaderCellDef> Wynik </mat-header-cell>
+      <mat-cell *matCellDef="let match"> {{match.player1.score}} : {{match.player2.score}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="player2.name">
+      <mat-header-cell *matHeaderCellDef> Gracz 2 </mat-header-cell>
+      <mat-cell *matCellDef="let match"> {{match.player2.name}} </mat-cell>
+    </ng-container> -->
+<!-- 
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let match">
+        <button mat-icon-button (click)="edit(match)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(match.id)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container> -->
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
