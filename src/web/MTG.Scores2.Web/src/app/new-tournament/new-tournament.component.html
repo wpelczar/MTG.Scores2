@@ -6,7 +6,7 @@
         <input matInput placeholder="Nazwa" formControlName="name">
       </mat-form-field>
       <h2 class="heading">Uczestnicy</h2>
-      <div formArrayName="participants" *ngFor="let participantControl of tournamentForm.get('participants').controls; let i = index">
+      <div formArrayName="participants" *ngFor="let participantControl of tournamentForm.get('participants')['controls']; let i = index">
         <div [formGroupName]="i">
           <div class="form-group">
             <div >
