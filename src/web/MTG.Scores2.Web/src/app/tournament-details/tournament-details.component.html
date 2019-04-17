@@ -2,16 +2,15 @@
   <div *ngIf="tournament">
     <mat-tab-group>
       <mat-tab label="Ranking">
-        <app-ranking tournamentId={{tournament.id}}>
+        <app-ranking #ranking tournamentId={{tournament.id}}>
         </app-ranking>
       </mat-tab>
       <mat-tab label="Mecze">
-        <app-scores tournamentId={{tournament.id}}>
+        <app-scores tournamentId={{tournament.id}} (matchesChanged)="ranking.refreshData()">
         </app-scores>
       </mat-tab>
       <mat-tab label="Uczestnicy"> 
         <app-participants tournamentId={{tournament.id}}>
-
         </app-participants>
       </mat-tab>
     </mat-tab-group>

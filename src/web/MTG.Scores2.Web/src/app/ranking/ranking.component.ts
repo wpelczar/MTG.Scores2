@@ -17,9 +17,16 @@ export class RankingComponent implements OnInit {
   constructor(private _rankigService: RankingService) {}
 
   ngOnInit(): void {
+    this.getRanking();
+  }
+
+  refreshData() {
+    this.getRanking();
+  }
+
+  private getRanking() {
     this._rankigService.getRanking(this.tournamentId)
         .subscribe(rankingRecords => this.ranking = rankingRecords,
             error => this.errorMessage = <any>error);
   }
-
 }

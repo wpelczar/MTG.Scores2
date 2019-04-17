@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IMatch } from '../shared/models/match';
 import { MatchService } from '../shared/services/match.service';
 import { IPlayer } from '../shared/models/player';
@@ -27,6 +27,7 @@ export class ScoresComponent implements OnInit {
   filterChange = new BehaviorSubject('');
 
   @Input() tournamentId: number;
+  @Output() matchesChanged = new EventEmitter<void>();
 
   constructor(private _matchService: MatchService,
     private _playerService: PlayerService,
@@ -40,6 +41,12 @@ export class ScoresComponent implements OnInit {
 
     this.matchesDataSource = new MatchesDataSource(this._matchService);
     this._matchService.getMatches(this.tournamentId);
+
+    this._matchService.dataChange.subscribe(
+      () => {
+        this.matchesChanged.emit();
+      }
+    );
   }
 
   applyFilter(filterValue: string) {

@@ -26,7 +26,7 @@ export class MatchService {
       }, (errorResponse: Response) => this.handleError(errorResponse));
   }
 
-  deleteMatch(tournamentId:number, id: number): void {
+  deleteMatch(tournamentId: number, id: number): void {
     this._http.delete(environment.apiUrl + '/tournaments/' + tournamentId + '/matches/' + id)
       .subscribe(response => {
         const newData = this._dataChange.value.filter(m => m.id !== id);
@@ -59,6 +59,7 @@ export class MatchService {
         const copiedData = this._dataChange.value.slice();
         const index = copiedData.findIndex(elem => elem.id === match.id);
         Object.assign(copiedData[index], match);
+        this._dataChange.next(copiedData);
         this._snackBar.open('Edycja zapisana', 'OK', {
           duration: 2000
         });
