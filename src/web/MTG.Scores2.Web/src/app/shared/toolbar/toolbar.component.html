@@ -1,11 +1,20 @@
-<div id="matches-toolbar">
+<div>
   <mat-toolbar color="primary">
+    <div style="width: 100%" class="floatfix"> 
+        <span class="toolbar-left">
+            <button mat-button class="sidenav-toggle toolbar-item" (click)="toggleSidenav.emit()">
+              <mat-icon>menu</mat-icon>
+            </button>
+        
+            <span class="toolbar-item">{{title}}</span>
+          </span>
+          <span class="toolbar-right">
+            <button mat-button class="toolbar-item">
+              <mat-icon>account_circle</mat-icon>
+            </button>
+          </span>
+    </div>
 
-    <button mat-button class="sidenav-toggle" (click)="toggleSidenav.emit()">
-      <mat-icon>menu</mat-icon>
-    </button>
 
-    <span>{{title}}</span>
   </mat-toolbar>
-
 </div>
