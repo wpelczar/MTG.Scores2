@@ -16,3 +16,13 @@
 .app-sidenav {
   width: 240px;
 }
+
+.logo-img{
+  max-height: 64px;
+}
+
+@media (max-width: 599px) {
+  .logo-img{
+    max-height: 56px;
+  }
+}
