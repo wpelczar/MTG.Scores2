@@ -1,27 +1,3 @@
-$iconWidth: 56px;
-
-.sidenav-toggle {
-  display: none;
-  padding: 0;
-  margin: 0 8px;
-  min-width: $iconWidth;
-
-  @media (max-width: 720px) {
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
-  }
-
-
-}
-.toolbar-item {
-  height: $iconWidth;
-  width: $iconWidth;
-  line-height: $iconWidth;
-  color: white;
-}
-
-
 .floatfix:after {
   content:'';
   display:block;
@@ -32,4 +8,23 @@ $iconWidth: 56px;
 }
 .toolbar-right {
   float: right;
+}
+
+.toolbar-item {
+  font-size: 18px;
+  height: 64px;
+}
+
+.logo-img{
+  max-height: 64px;
+  margin: 0 15px;
+}
+
+@media (max-width: 599px) {
+  .logo-img{
+    max-height: 56px;
+  }
+  .toolbar-item{
+    height: 56px;
+  }
 }

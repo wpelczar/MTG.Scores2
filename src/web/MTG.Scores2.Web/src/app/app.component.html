@@ -1,28 +1,7 @@
-<mat-sidenav-container class="app-sidenav-container">
-
-  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'">
-    <mat-toolbar color="primary">
-      <img class="logo-img" src="../assets/mtg_logo.png" alt="logo">
-    </mat-toolbar>
-
-    <mat-nav-list>
-      <mat-list-item [routerLinkActive]="['link-active']" [routerLink]="['/tournaments']">
-        <a matline>
-          <span class='glyphicon glyphicon-th-list'></span> Turnieje
-        </a>
-      </mat-list-item>
-    </mat-nav-list>
-
-  </mat-sidenav>
-
-  <div class="app-sidenav-content">
-    <app-toolbar 
-      title={{title}}
-      (toggleSidenav)="sidenav.toggle()"> 
-    </app-toolbar>
-    <div class="wrapper">
-      <router-outlet></router-outlet>
-    </div>
+<app-toolbar title={{title}} (toggleSidenav)="sidenav.toggle()">
+</app-toolbar>
+<div class="container">
+  <div class="wrapper">
+    <router-outlet></router-outlet>
   </div>
-
-</mat-sidenav-container>
+</div>

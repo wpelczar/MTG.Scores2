@@ -1,12 +1,11 @@
 <div>
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" class="mat-elevation-z10">
     <div style="width: 100%" class="floatfix"> 
         <span class="toolbar-left">
-            <button mat-button class="sidenav-toggle toolbar-item" (click)="toggleSidenav.emit()">
-              <mat-icon>menu</mat-icon>
+            <img class="logo-img" src="../assets/mtg_logo.png" alt="logo">
+            <button mat-button class="toolbar-item" [routerLink]="['/tournaments']">
+              Turnieje
             </button>
-        
-            <span class="toolbar-item">{{title}}</span>
           </span>
           <span class="toolbar-right">
             <button mat-button class="toolbar-item">
