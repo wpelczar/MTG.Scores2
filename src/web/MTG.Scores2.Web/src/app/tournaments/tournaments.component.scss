@@ -1,16 +1,10 @@
 #add-tournament-button{
   position: absolute;
-  top:100px;
-  right: 60px;
+  top: 20px;
+  right: 40px;
 }
-
-@media (max-width: 599px) {
-  #add-tournament-button{
-    top:90px;
-  }
-}
-
 
 .table-wrapper{
   padding: 10px;
+  position: relative;
 }

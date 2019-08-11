@@ -1,15 +1,10 @@
 #add-match-button{
   position: absolute;
-  top:35px;
-  right: 60px;
-}
-
-@media (max-width: 599px) {
-  #add-match-button{
-    top:25px;
-  }
+  top: 20px;
+  right: 40px;
 }
 
 .table-wrapper{
   padding: 10px;
+  position: relative;
 }

@@ -1,11 +1,11 @@
-<button id="add-match-button" mat-fab color="accent" (click)="openAddMatchDialog()">
-  <mat-icon>add</mat-icon>
-</button>
-
 <div class="mat-elevation-z table-wrapper">
-    <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtr">
-      </mat-form-field>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtr">
+  </mat-form-field>
+
+  <button id="add-match-button" mat-fab color="accent" (click)="openAddMatchDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
 
   <mat-table #table [dataSource]="matchesDataSource">
 
