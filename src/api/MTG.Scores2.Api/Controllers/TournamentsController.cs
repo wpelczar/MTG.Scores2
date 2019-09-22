@@ -63,8 +63,6 @@ namespace MTG.Scores2.Api.Controllers
       var newUri = Url.Link("TournamentGet", new { id = tournament.ID });
       tournamentViewModel.ID = tournament.ID;
 
-      throw new ArgumentException();
-
       return Created(newUri, tournamentViewModel);
     }
 
