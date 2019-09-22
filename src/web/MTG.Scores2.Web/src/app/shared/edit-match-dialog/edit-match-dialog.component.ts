@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IMatch } from '../models/match';
 import { IEditMatchDialogData } from '../models/edit-match-dialog-data';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';

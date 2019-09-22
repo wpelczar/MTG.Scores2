@@ -4,7 +4,7 @@ import { MatchService } from '../shared/services/match.service';
 import { IPlayer } from '../shared/models/player';
 import { PlayerService } from '../shared/services/player.service';
 import { EditMatchDialogComponent } from '../shared/edit-match-dialog/edit-match-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { IEditMatchDialogData } from '../shared/models/edit-match-dialog-data';
 import { DeleteConfirmationDialogComponent } from '../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { DataSource } from '@angular/cdk/table';
