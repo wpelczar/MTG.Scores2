@@ -1,6 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { IMatch } from '../models/match';
 import { BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
@@ -14,16 +14,15 @@ export class MatchService {
 
   get data(): IMatch[] { return this._dataChange.value; }
 
-  constructor(private _http: Http,
+  constructor(private _http: HttpClient,
     private _snackBar: MatSnackBar) {
   }
 
   getMatches(tournamentId: number): void {
     this._http.get(environment.apiUrl + '/tournaments/' + tournamentId + '/matches' )
-      .subscribe((response: Response) => {
-        const matches = <IMatch[]>response.json();
+      .subscribe((matches: IMatch[]) => {
         this._dataChange.next(matches);
-      }, (errorResponse: Response) => this.handleError(errorResponse));
+      }, (errorResponse: HttpErrorResponse) => this.handleError(errorResponse));
   }
 
   deleteMatch(tournamentId: number, id: number): void {
@@ -41,8 +40,7 @@ export class MatchService {
 
   addMatch(tournamentId: number,  match: IMatch): void {
     this._http.post((environment.apiUrl + '/tournaments/' + tournamentId + '/matches' ), match)
-      .subscribe(response => {
-        const createdMatch = <IMatch>(JSON.parse(response.text()));
+      .subscribe((createdMatch: IMatch) => {
         const newdata = this._dataChange.value.concat(createdMatch);
         this._dataChange.next(newdata);
         this._snackBar.open('Mecz dodany', 'OK', {
@@ -68,11 +66,12 @@ export class MatchService {
       });
   }
 
-  private handleError(error: Response) {
+  private handleError(error: HttpErrorResponse) {
     console.error(error);
     this._snackBar.open('Wystąpił błąd', 'ZAMKNIJ', {
       duration: 3000
     });
-    return Observable.throw(error.statusText || 'Server error');
+
+    return throwError(error.error || 'Server error');
   }
 }

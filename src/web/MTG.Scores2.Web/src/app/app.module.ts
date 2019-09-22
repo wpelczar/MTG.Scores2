@@ -6,7 +6,7 @@ import { MaterialModule } from './material/material.module';
 import { RankingComponent } from './ranking/ranking.component';
 import { RankingService } from './shared/services/ranking.service';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ScoresComponent } from './scores/scores.component';
 import { EditMatchDialogComponent } from './shared/edit-match-dialog/edit-match-dialog.component';
 import { DeleteConfirmationDialogComponent } from './shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
@@ -45,7 +45,7 @@ import { ParticipantsComponent } from './participants/participants.component';
     BrowserModule,
     MaterialModule,
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule

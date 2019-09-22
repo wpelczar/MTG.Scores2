@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Models;
 using MTG.Scores2.Api.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -61,6 +62,8 @@ namespace MTG.Scores2.Api.Controllers
 
       var newUri = Url.Link("TournamentGet", new { id = tournament.ID });
       tournamentViewModel.ID = tournament.ID;
+
+      throw new ArgumentException();
 
       return Created(newUri, tournamentViewModel);
     }
