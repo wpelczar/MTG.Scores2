@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router ) {
   }
 
-  @ViewChild(MatSidenav) sidenav: MatSidenav;
+  @ViewChild(MatSidenav, { static: false }) sidenav: MatSidenav;
 
   ngOnInit(): void {
     this.router.events
