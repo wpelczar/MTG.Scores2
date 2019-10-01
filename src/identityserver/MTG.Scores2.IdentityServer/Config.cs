@@ -64,7 +64,6 @@ namespace MTG.Scores2.IdentityServer
                 {
                     ClientId = "spa",
                     ClientName = "SPA Client",
-                    ClientUri = "http://identityserver.io",
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
@@ -72,14 +71,11 @@ namespace MTG.Scores2.IdentityServer
 
                     RedirectUris =
                     {
-                        "http://localhost:5002/index.html",
-                        "http://localhost:5002/callback.html",
-                        "http://localhost:5002/silent.html",
-                        "http://localhost:5002/popup.html",
+                        "http://localhost:4200/auth-callback"
                     },
 
-                    PostLogoutRedirectUris = { "http://localhost:5002/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:5002" },
+                    PostLogoutRedirectUris = { "http://localhost:4200" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
 
                     AllowedScopes = { "openid", "profile", "mtgscores2api" }
                 }

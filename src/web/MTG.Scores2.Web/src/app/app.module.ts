@@ -21,6 +21,7 @@ import { TournamentDetailsComponent } from './tournament-details/tournament-deta
 import { TournamentService } from './shared/services/tournament.service';
 import { ParticipantsComponent } from './participants/participants.component';
 import { AccountModule } from './account/account.module';
+import { AuthService } from './shared/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { AccountModule } from './account/account.module';
     RankingService,
     MatchService,
     PlayerService,
-    TournamentService
+    TournamentService,
+    AuthService
   ],
   entryComponents: [EditMatchDialogComponent, DeleteConfirmationDialogComponent],
   bootstrap: [AppComponent]
