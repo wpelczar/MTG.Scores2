@@ -20,6 +20,7 @@ import { NewTournamentComponent } from './new-tournament/new-tournament.componen
 import { TournamentDetailsComponent } from './tournament-details/tournament-details.component';
 import { TournamentService } from './shared/services/tournament.service';
 import { ParticipantsComponent } from './participants/participants.component';
+import { AccountModule } from './account/account.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ParticipantsComponent } from './participants/participants.component';
     MaterialModule,
     CommonModule,
     HttpClientModule,
+    AccountModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule

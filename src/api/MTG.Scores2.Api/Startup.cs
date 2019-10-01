@@ -27,6 +27,15 @@ namespace MTG.Scores2.Api
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+      services.AddAuthentication("Bearer")
+        .AddJwtBearer("Bearer", options =>
+        {
+          options.Authority = "http://localhost:5000";
+          options.RequireHttpsMetadata = false;
+          options.Audience = "mtgscores2api";
+        }
+        );
+
       services.AddDbContext<MtgContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MtgDatabase")));
 
       services.AddTransient<MtgContextSeedData>();
@@ -59,6 +68,8 @@ namespace MTG.Scores2.Api
           builder.AllowAnyHeader();
         }
       );
+
+      app.UseAuthentication();
 
       if (env.IsDevelopment())
       {

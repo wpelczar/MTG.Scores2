@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace MTG.Scores2.Api.Controllers
 {
   [Route("api/tournaments")]
+  [Authorize]
   [ApiController]
   public class TournamentsController : Controller
   {
