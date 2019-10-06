@@ -7,9 +7,14 @@
               Turnieje
             </button>
           </span>
-          <span class="toolbar-right">
-            <button mat-button class="toolbar-item">
-              <mat-icon>account_circle</mat-icon>
+          <span *ngIf="!isAuthenticated" class="toolbar-right">
+            <button mat-button class="toolbar-item" [routerLink]="['/login']"  >
+              <mat-icon>account_circle</mat-icon> Zaloguj
+            </button>
+          </span>
+          <span *ngIf="isAuthenticated" class="toolbar-right">
+            <button mat-button class="toolbar-item" (click)="signout()">
+              <mat-icon>account_circle</mat-icon> Wyloguj
             </button>
           </span>
     </div>
