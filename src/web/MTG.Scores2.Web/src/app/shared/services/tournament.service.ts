@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { ITournament } from '../models/tournament';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class TournamentService {
 
   get data(): ITournament[] { return this._dataChange.value; }
 
-  constructor(private _http: HttpClient, private _snackBar: MatSnackBar) {
+  constructor(private _http: HttpClient, private _snackBar: MatSnackBar, private authService: AuthService) {
     this._tournamentUrl = environment.apiUrl + '/tournaments';
   }
 
@@ -26,7 +27,12 @@ export class TournamentService {
   }
 
   getTournaments(): void {
-    this._http.get(this._tournamentUrl)
+
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    this._http.get(this._tournamentUrl, httpOptions)
       .subscribe((tournaments: ITournament[]) => {
         this._dataChange.next(tournaments);
       }, (errorResponse: HttpErrorResponse) => this.handleError(errorResponse));
@@ -51,6 +57,16 @@ export class TournamentService {
       }, errorResponse => {
         this.handleError(errorResponse);
       });
+  }
+
+  private getHeaders(): HttpHeaders {
+    if (this.authService.isAuthenticated()) {
+      return new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': this.authService.authorizationHeaderValue
+      });
+    }
+    return null;
   }
 
   private handleError(error: HttpErrorResponse) {
