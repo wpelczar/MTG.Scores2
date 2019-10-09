@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 namespace MTG.Scores2.Api.Controllers
 {
   [Route("api/tournaments")]
-  [Authorize]
   [ApiController]
   public class TournamentsController : Controller
   {
@@ -56,6 +55,7 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Post([FromBody]TournamentViewModel tournamentViewModel)
     {
       var tournament = _mapper.Map<Tournament>(tournamentViewModel);
@@ -69,6 +69,7 @@ namespace MTG.Scores2.Api.Controllers
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
       var tournament = await _tournamentRepository.Get(id);

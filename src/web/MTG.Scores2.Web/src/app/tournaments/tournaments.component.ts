@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ITournament } from '../shared/models/tournament';
 import { DataSource } from '@angular/cdk/table';
 import { TournamentService } from '../shared/services/tournament.service';
@@ -7,6 +7,7 @@ import { map, merge } from 'rxjs/operators';
 import { IDeleteConfirmationDialogData } from '../shared/models/delete-confirmation-dialog-data';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from '../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-tournaments',
@@ -18,13 +19,18 @@ export class TournamentsComponent implements OnInit {
   displayedColumns = ['ID', 'name', 'actions'];
   errorMessage: string;
   filterChange = new BehaviorSubject('');
+  isAuthenticated: boolean;
+  authSubscription: Subscription;
 
-
-  constructor(private _tournamentService: TournamentService, private _dialog: MatDialog) { }
+  constructor(
+    private _tournamentService: TournamentService,
+    private _dialog: MatDialog,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.tournamentsDataSource = new TournamentDataSource(this._tournamentService);
     this._tournamentService.getTournaments();
+    this.authSubscription = this.authService.authNavStatus$.subscribe(status => this.isAuthenticated = status);
   }
 
   applyFilter(filterValue: string) {
@@ -34,11 +40,11 @@ export class TournamentsComponent implements OnInit {
   delete(id: number): void {
     const dialogRef = this._dialog.open(
       DeleteConfirmationDialogComponent, {
-        data: <IDeleteConfirmationDialogData>{
-          title: 'Usuwanie turnieju',
-          text: 'Na pewno chcesz usunąć turniej?'
-        }
-      });
+      data: <IDeleteConfirmationDialogData>{
+        title: 'Usuwanie turnieju',
+        text: 'Na pewno chcesz usunąć turniej?'
+      }
+    });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Result is ${JSON.stringify(result)}`);

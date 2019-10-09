@@ -22,6 +22,7 @@ import { TournamentService } from './shared/services/tournament.service';
 import { ParticipantsComponent } from './participants/participants.component';
 import { AccountModule } from './account/account.module';
 import { AuthService } from './shared/services/auth.service';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { AuthService } from './shared/services/auth.service';
     RouterModule.forRoot([
       { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
       { path: 'tournaments', component: TournamentsComponent, data: { title: 'Turnieje' } },
-      { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' } },
+      { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' }, canActivate: [AuthGuard] },
       { path: 'tournament-details/:id', component: TournamentDetailsComponent} ,
       { path: '**', redirectTo: 'ranking' }
     ]),

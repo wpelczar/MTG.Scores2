@@ -27,19 +27,18 @@ export class TournamentService {
   }
 
   getTournaments(): void {
-
-    const httpOptions = {
-      headers: this.getHeaders()
-    };
-
-    this._http.get(this._tournamentUrl, httpOptions)
+    this._http.get(this._tournamentUrl)
       .subscribe((tournaments: ITournament[]) => {
         this._dataChange.next(tournaments);
       }, (errorResponse: HttpErrorResponse) => this.handleError(errorResponse));
   }
 
   addTournament(tournament: ITournament): void {
-    this._http.post(this._tournamentUrl, tournament)
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    this._http.post(this._tournamentUrl, tournament, httpOptions)
       .subscribe((createdTournament: ITournament) => {
         const newData = this.data.concat(createdTournament);
         this._dataChange.next(newData);
@@ -47,7 +46,11 @@ export class TournamentService {
   }
 
   delete(id: number): void {
-    this._http.delete(this._tournamentUrl + '/' + id)
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    this._http.delete(this._tournamentUrl + '/' + id, httpOptions)
       .subscribe(response => {
         const newData = this._dataChange.value.filter(m => m.id !== id);
         this._dataChange.next(newData);
