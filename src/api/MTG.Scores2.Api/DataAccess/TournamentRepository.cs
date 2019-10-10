@@ -24,9 +24,11 @@ namespace MTG.Scores2.Api.DataAccess
       _context.Remove(tournament);
     }
 
-    public Task<Tournament> Get(int id)
+    public Task<Tournament> Get(int id, bool includeParticipants)
     {
-      return _context.Tournaments.Include(x => x.Participants).SingleOrDefaultAsync(t => t.ID == id);
+      return includeParticipants
+        ? _context.Tournaments.Include(x => x.Participants).SingleOrDefaultAsync(t => t.ID == id)
+        : _context.Tournaments.SingleOrDefaultAsync(t => t.ID == id);
     }
 
     public Task<List<Tournament>> GetAll()

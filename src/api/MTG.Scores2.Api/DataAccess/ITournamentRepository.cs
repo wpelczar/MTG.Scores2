@@ -9,7 +9,7 @@ namespace MTG.Scores2.Api.DataAccess
     void Add(Tournament tournament);
     void Delete(Tournament tournament);
     Task<List<Tournament>> GetAll();
-    Task<Tournament> Get(int id);
+    Task<Tournament> Get(int id, bool includeParticipants);
     Task<int> SaveAllAsync();
   }
 }

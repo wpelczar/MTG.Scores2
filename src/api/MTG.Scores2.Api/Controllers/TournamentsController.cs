@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Models;
 using MTG.Scores2.Api.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace MTG.Scores2.Api.Controllers
     [HttpGet("{id}", Name = "TournamentGet")]
     public async Task<IActionResult> Get(int id)
     {
-      var tournament = await _tournamentRepository.Get(id);
+      var tournament = await _tournamentRepository.Get(id, true);
 
       if (tournament == null)
       {
@@ -72,7 +71,7 @@ namespace MTG.Scores2.Api.Controllers
     [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
-      var tournament = await _tournamentRepository.Get(id);
+      var tournament = await _tournamentRepository.Get(id, false);
 
       if (tournament == null)
       {
