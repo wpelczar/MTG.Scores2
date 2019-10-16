@@ -7,79 +7,50 @@ using System.Collections.Generic;
 
 namespace MTG.Scores2.IdentityServer
 {
-    public static class Config
+  public static class Config
+  {
+    public static IEnumerable<IdentityResource> GetIdentityResources()
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources()
-        {
-            return new IdentityResource[]
-            {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-            };
-        }
-
-        public static IEnumerable<ApiResource> GetApis()
-        {
-            return new ApiResource[]
-            {
-                new ApiResource("mtgscores2api", "MTG.Scores2 api")
-            };
-        }
-
-        public static IEnumerable<Client> GetClients()
-        {
-            return new[]
-            {
-                // client credentials flow client
-                new Client
-                {
-                    ClientId = "client",
-                    ClientName = "Client Credentials Client",
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
-
-                    AllowedScopes = { "mtgscores2api" }
-                },
-
-                // MVC client using hybrid flow
-                new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
-
-                    RedirectUris = { "http://localhost:5001/signin-oidc" },
-                    FrontChannelLogoutUri = "http://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
-
-                    AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "mtgscores2api" }
-                },
-
-                // SPA client using code flow + pkce
-                new Client
-                {
-                    ClientId = "spa",
-                    ClientName = "SPA Client",
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-
-                    RedirectUris =
-                    {
-                        "http://localhost:4200/auth-callback"
-                    },
-
-                    PostLogoutRedirectUris = { "http://localhost:4200" },
-                    AllowedCorsOrigins = { "http://localhost:4200" },
-
-                    AllowedScopes = { "openid", "profile", "mtgscores2api" }
-                }
-            };
-        }
+      return new IdentityResource[]
+      {
+        new IdentityResources.OpenId(),
+        new IdentityResources.Profile(),
+      };
     }
+
+    public static IEnumerable<ApiResource> GetApis()
+    {
+      return new ApiResource[]
+      {
+        new ApiResource("mtgscores2api", "MTG.Scores2 api")
+      };
+    }
+
+    public static IEnumerable<Client> GetClients()
+    {
+      return new[]
+      {
+                // SPA client using code flow + pkce
+        new Client
+        {
+          ClientId = "spa",
+          ClientName = "SPA Client",
+
+          AllowedGrantTypes = GrantTypes.Code,
+          RequirePkce = true,
+          RequireClientSecret = false,
+
+          RedirectUris =
+          {
+             $"{Startup.Configuration["SpaClientUrl"]}/auth-callback"
+          },
+
+          PostLogoutRedirectUris = { Startup.Configuration["SpaClientUrl"] },
+          AllowedCorsOrigins = { Startup.Configuration["SpaClientUrl"] },
+
+          AllowedScopes = { "openid", "profile", "mtgscores2api" }
+        }
+      };
+    }
+  }
 }

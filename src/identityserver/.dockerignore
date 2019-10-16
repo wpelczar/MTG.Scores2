@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+.env
+**/bin
+**/obj
+**/node_modules
+**/bower_components
+**/dist
+README.md
+LICENSE
+.vscode
+*.sln

@@ -9,6 +9,7 @@ services:
       - db
     environment:
         ConnectionStrings__MtgDatabase: "Data Source=db;Initial Catalog=MtgScores2;User=sa;Password=Your_password123;"
+        JwtBearerAuthority: "http://identityserver"
     networks:
       - app-net
   db:
@@ -33,6 +34,18 @@ services:
       - "80:80"
     depends_on:
       - api
+    networks:
+      - app-net
+  identityserver:
+    image: "wpelczar/mtgscores2_identityserver:latest"
+    build: 
+      context: src/identityserver/
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+        ASPNETCORE_ENVIRONMENT: "DEVELOPMENT"
+        SpaClientUrl: "http://localhost"
     networks:
       - app-net
 

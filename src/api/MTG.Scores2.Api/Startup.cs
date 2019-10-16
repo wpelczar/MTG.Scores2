@@ -30,7 +30,8 @@ namespace MTG.Scores2.Api
       services.AddAuthentication("Bearer")
         .AddJwtBearer("Bearer", options =>
         {
-          options.Authority = "http://localhost:5000";
+          options.Authority = Configuration.GetValue<string>("JwtBearerAuthority");
+          options.TokenValidationParameters.ValidIssuer = Configuration.GetValue<string>("JwtBearerIssuer");
           options.RequireHttpsMetadata = false;
           options.Audience = "mtgscores2api";
         }

@@ -53,10 +53,10 @@ export class AuthService {
 
 export function getClientSettings(): UserManagerSettings {
   return {
-    authority: 'http://localhost:5000',
+    authority: `${environment.identityServerUrl}`,
     client_id: 'spa',
-    redirect_uri: 'http://localhost:4200/auth-callback',
-    post_logout_redirect_uri: 'http://localhost:4200',
+    redirect_uri: `${environment.hostUrl}/auth-callback`,
+    post_logout_redirect_uri: `${environment.hostUrl}`,
     response_type: 'code',
     scope: 'openid profile mtgscores2api',
     filterProtocolClaims: true,
