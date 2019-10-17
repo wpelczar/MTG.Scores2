@@ -21,6 +21,10 @@ variables:
   value: 'mtgscores2_web:ci-$(build.buildId)'
 - name: imageName_web_latest
   value: 'mtgscores2_web:latest'
+- name: imageName_identityserver
+  value: 'mtgscores2_identityserver:ci-$(build.buildId)'
+- name: imageName_identityserver_latest
+  value: 'mtgscores2_identityserver:latest'
 
 steps:
 - script: |
@@ -35,6 +39,7 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
 
 - script: |
     docker build -f src/api/ci.runtime.yml -t $(dockerhub_user)/$(imageName_api) -t $(dockerhub_user)/$(imageName_api_latest) src/api/
@@ -43,6 +48,10 @@ steps:
 - script: |
     docker build -f src/web/Dockerfile -t $(dockerhub_user)/$(imageName_web) -t $(dockerhub_user)/$(imageName_web_latest) src/web/
   displayName: 'docker build web image'
+
+- script: |
+    docker build -f src/identityserver/Dockerfile -t $(dockerhub_user)/$(imageName_identityserver) -t $(dockerhub_user)/$(imageName_identityserver_latest) src/identityserver
+  displayName: 'docker build identityserver image'
 
 - task: Docker@1
   inputs:
@@ -60,3 +69,9 @@ steps:
     docker push $(dockerhub_user)/$(imageName_web)
     docker push $(dockerhub_user)/$(imageName_web_latest)
   displayName: 'push api image to dockerhub'
+
+  
+- script: |
+    docker push $(dockerhub_user)/$(imageName_identityserver)
+    docker push $(dockerhub_user)/$(imageName_identityserver_latest)
+  displayName: 'push identityserver image to dockerhub'
