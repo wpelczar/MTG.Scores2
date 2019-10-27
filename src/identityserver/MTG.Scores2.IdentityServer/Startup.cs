@@ -70,6 +70,10 @@ namespace MTG.Scores2.IdentityServer
                   options.ClientId = "copy client ID from Google here";
             options.ClientSecret = "copy client secret from Google here";
           });
+
+      services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+       .AllowAnyMethod()
+       .AllowAnyHeader()));
     }
 
     public void Configure(IApplicationBuilder app)
@@ -83,6 +87,8 @@ namespace MTG.Scores2.IdentityServer
       {
         app.UseExceptionHandler("/Home/Error");
       }
+
+      app.UseCors("AllowAll");
 
       app.UseStaticFiles();
       app.UseIdentityServer();

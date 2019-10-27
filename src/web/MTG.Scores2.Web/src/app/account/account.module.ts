@@ -4,18 +4,23 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { MaterialModule } from '../material/material.module';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
       { path: 'login', component: LoginComponent },
-      { path: 'auth-callback', component: AuthCallbackComponent  }
+      { path: 'auth-callback', component: AuthCallbackComponent  },
+      { path: 'register', component: RegisterComponent  }
   ];
 
 @NgModule({
-  declarations: [LoginComponent, AuthCallbackComponent],
+  declarations: [LoginComponent, AuthCallbackComponent, RegisterComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class AccountModule { }
