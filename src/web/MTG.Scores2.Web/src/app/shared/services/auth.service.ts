@@ -32,7 +32,7 @@ export class AuthService {
 
   register(userRegistration: UserRegistration) {
     // TODO: catch errors
-    return this.http.post(environment.identityServerUrl + '/account/register', userRegistration)
+    return this.http.post(environment.identityServerUrl + '/account/register', userRegistration);
   }
 
   async completeAuthentication() {

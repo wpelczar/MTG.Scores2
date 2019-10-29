@@ -9,9 +9,15 @@
           </span>
           <span *ngIf="!isAuthenticated" class="toolbar-right">
             <button mat-button class="toolbar-item" [routerLink]="['/login']"  >
-              <mat-icon>account_circle</mat-icon> Zaloguj
+              Zaloguj
             </button>
           </span>
+
+          <span *ngIf="!isAuthenticated" class="toolbar-right">
+              <button mat-button class="toolbar-item" [routerLink]="['/register']"  >
+                Rejestracja
+              </button>
+            </span>
           <span *ngIf="isAuthenticated" class="toolbar-right">
             <button mat-button class="toolbar-item" (click)="signout()">
               <mat-icon>account_circle</mat-icon> Wyloguj
