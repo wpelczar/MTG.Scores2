@@ -7,44 +7,36 @@
 
 
       <mat-card-content>
-        <div>
           <mat-form-field>
             <input matInput type="text" placeholder="Twój login" id="name" name="name"
               [(ngModel)]="userRegistration.name" required autoFocus>
           </mat-form-field>
-        </div>
-        <div>
+
           <mat-form-field>
             <input matInput type="email" placeholder="Adres email" id="email" name="email" #email="ngModel"
               [(ngModel)]="userRegistration.email" email required>
             <mat-error [hidden]="email.valid || (email.pristine && !submitted)">Niepoprawny email</mat-error>
           </mat-form-field>
 
-        </div>
-
-        <div>
           <mat-form-field>
             <input matInput type="password" placeholder="Hasło" id="password" name="password"
               [(ngModel)]="userRegistration.password" aria-describedby="passwordHelp" required>
-            <mat-hint>Min. 6 characters with at least one non alphanumeric character</mat-hint>
+            <mat-hint>Min. 6 znaków, co najmniej 1 cyfra i 1 znak specjalny</mat-hint>
           </mat-form-field>
-        </div>
-
-
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-raised-button class="submit-btn" color="primary" type="submit" [disabled]="!f.form.valid">Ok</button>
+        <button mat-raised-button class="submit-btn" color="primary" type="submit" [disabled]="!f.form.valid">Zatwierdź</button>
       </mat-card-actions>
       <div *ngIf="error" class="alert alert-danger mt-3" role="alert">
-        <strong>Oops!</strong> {{error}}
+        <strong>Ups!</strong> {{error}}
       </div>
 
     </form>
 
     <div *ngIf="success" class="alert alert-success" role="alert">
-      <h4 class="alert-heading">Well done!</h4>
-      <p>Your account was created successfully, <a routerLink="/login">Please login</a> to continue.</p>
+      <h4 class="alert-heading">Świetnie!</h4>
+      <p>Ywoje konto zostało założone pomyślnie, <a routerLink="/login">Zaloguj się</a> aby kontynuować.</p>
     </div>
 
   </mat-card>
