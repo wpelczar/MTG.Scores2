@@ -6,6 +6,7 @@ import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { MaterialModule } from '../material/material.module';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes: Routes = [
       { path: 'login', component: LoginComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule
   ]
 })
 export class AccountModule { }
