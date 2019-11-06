@@ -4,9 +4,15 @@
   margin: 50px 0 0 0;
 }
 
-.mat-form-field {
-  margin: 5px 0;
+mat-card {
   min-width: 300px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+mat-form-field {
+  margin: 5px 0;
 }
 
 mat-card-content {
@@ -25,7 +31,3 @@ mat-card-actions {
   justify-content: flex-end;
   margin-bottom: 0px;
 }
-
-// mat-card-actions .submit-btn {
-//   justify-self: flex-end
-// }
