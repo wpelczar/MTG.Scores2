@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -209,6 +210,7 @@ namespace IdentityServer4.Quickstart.UI
     }
 
     [HttpPost]
+    [EnableCors("RegistrerEndpointCorsPolicy")]
     public async Task<IActionResult> Register([FromBody]RegisterInputModel model)
     {
       if (!ModelState.IsValid)
