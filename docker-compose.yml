@@ -46,6 +46,8 @@ services:
     environment:
         ASPNETCORE_ENVIRONMENT: "DEVELOPMENT"
         SpaClientUrl: "http://localhost"
+        ConnectionStrings__IdentityServerDatabase: "Data Source=db;Initial Catalog=MtgScores2IdentityServer;User=sa;Password=Your_password123;"
+
     networks:
       - app-net
 

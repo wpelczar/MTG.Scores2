@@ -23,7 +23,7 @@ namespace MTG.Scores2.IdentityServer
       var host = CreateWebHostBuilder(args).Build();
 
       var config = host.Services.GetRequiredService<IConfiguration>();
-      var connectionString = config.GetConnectionString("DefaultConnection");
+      var connectionString = config.GetConnectionString("IdentityServerDatabase");
       SeedData.EnsureSeedData(connectionString);
 
 
