@@ -239,3 +239,4 @@ _Pvt_Extensions
 
 #other
 .vscode/
+**/identityserver4_log.txt
