@@ -26,7 +26,7 @@ namespace MTG.Scores2.IdentityServer
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+          options.UseSqlServer(Configuration.GetConnectionString("IdentityServerDatabase")));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -70,6 +70,13 @@ namespace MTG.Scores2.IdentityServer
                   options.ClientId = "copy client ID from Google here";
             options.ClientSecret = "copy client secret from Google here";
           });
+
+      services.AddCors(options => options.AddPolicy("RegistrerEndpointCorsPolicy", corsBuilder =>
+      {
+        corsBuilder.WithOrigins(Startup.Configuration["SpaClientUrl"]);
+        corsBuilder.AllowAnyMethod();
+        corsBuilder.AllowAnyHeader();
+      }));
     }
 
     public void Configure(IApplicationBuilder app)

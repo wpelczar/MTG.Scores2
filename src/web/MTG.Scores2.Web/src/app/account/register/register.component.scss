@@ -1,0 +1,33 @@
+ .register-form {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0 0 0;
+}
+
+mat-card {
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+mat-form-field {
+  margin: 5px 0;
+}
+
+mat-card-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0px;
+}

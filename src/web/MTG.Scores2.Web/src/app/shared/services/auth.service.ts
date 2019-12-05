@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { UserRegistration } from '../models/user-registration';
 import { environment } from '../../../environments/environment';
 
 
@@ -27,6 +28,11 @@ export class AuthService {
 
   login() {
     return this.manager.signinRedirect();
+  }
+
+  register(userRegistration: UserRegistration) {
+    // TODO: catch errors
+    return this.http.post(environment.identityServerUrl + '/account/register', userRegistration);
   }
 
   async completeAuthentication() {
