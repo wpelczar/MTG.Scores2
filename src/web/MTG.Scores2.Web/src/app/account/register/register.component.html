@@ -6,7 +6,6 @@
     </mat-card-header>
     <form *ngIf="!success" #f="ngForm" (ngSubmit)="onSubmit()">
 
-
       <mat-card-content>
         <mat-form-field>
           <input matInput type="text" placeholder="Twój login" id="name" name="name" [(ngModel)]="userRegistration.name"
@@ -38,7 +37,7 @@
 
     <div *ngIf="success" class="alert alert-success" role="alert">
       <h4 class="alert-heading">Świetnie!</h4>
-      <p>Ywoje konto zostało założone pomyślnie, <a routerLink="/login">Zaloguj się</a> aby kontynuować.</p>
+      <p>Twoje konto zostało założone pomyślnie, <a routerLink="/login">Zaloguj się</a> aby kontynuować.</p>
     </div>
 
   </mat-card>
