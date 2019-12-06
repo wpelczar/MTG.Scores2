@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
 import { ITournament } from '../shared/models/tournament';
 import { DataSource } from '@angular/cdk/table';
 import { TournamentService } from '../shared/services/tournament.service';
-import { map, merge } from 'rxjs/operators';
+import { map, merge, catchError, finalize } from 'rxjs/operators';
 import { IDeleteConfirmationDialogData } from '../shared/models/delete-confirmation-dialog-data';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteConfirmationDialogComponent } from '../shared/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { AuthService } from '../shared/services/auth.service';
 
@@ -25,11 +26,13 @@ export class TournamentsComponent implements OnInit {
   constructor(
     private _tournamentService: TournamentService,
     private _dialog: MatDialog,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
+    ) { }
 
   ngOnInit() {
-    this.tournamentsDataSource = new TournamentDataSource(this._tournamentService);
-    this._tournamentService.getTournaments();
+    this.tournamentsDataSource = new TournamentDataSource(this._tournamentService, this._snackBar);
+    this.tournamentsDataSource.loadTournaments();
     this.authSubscription = this.authService.authNavStatus$.subscribe(status => this.isAuthenticated = status);
   }
 
@@ -49,14 +52,20 @@ export class TournamentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(`Result is ${JSON.stringify(result)}`);
       if (result === true) {
-        this._tournamentService.delete(id);
+        this.tournamentsDataSource.deleteTournament(id);
       }
     });
   }
 }
 
 export class TournamentDataSource extends DataSource<ITournament> {
+
+  private tournamentsSubject = new BehaviorSubject<ITournament[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+
   _filterChange = new BehaviorSubject('');
+
+  public loading$ = this.loadingSubject.asObservable();
 
   get filter(): string {
     return this._filterChange.value;
@@ -66,20 +75,50 @@ export class TournamentDataSource extends DataSource<ITournament> {
     this._filterChange.next(filter);
   }
 
-  constructor(private _tournamentService: TournamentService, ) {
+  constructor(
+    private _tournamentService: TournamentService,
+    private _snackBar: MatSnackBar) {
     super();
   }
 
   connect(): Observable<ITournament[]> {
-    return this._tournamentService.dataChange.pipe(
+    return this.tournamentsSubject.asObservable().pipe(
       merge(this._filterChange),
       map(() => {
-        return this._tournamentService.data.filter(
+        return this.tournamentsSubject.value.filter(
           t => t.name.toLowerCase().includes(this._filterChange.value));
       }));
   }
 
   disconnect(): void {
+    this.tournamentsSubject.complete();
   }
+
+  loadTournaments(): void {
+    this.loadingSubject.next(true);
+
+    this._tournamentService.getTournaments().pipe(
+      catchError(() => of([])),
+      finalize(() => this.loadingSubject.next(false))
+    )
+    .subscribe(tournaments => this.tournamentsSubject.next(tournaments))
+  }
+
+  deleteTournament(id: number): void {
+    this._tournamentService.delete(id)
+    .subscribe(response => {
+        const newData = this.tournamentsSubject.value.filter(m => m.id !== id);
+        this.tournamentsSubject.next(newData);
+        this._snackBar.open('Turniej usunięty', 'OK', {
+          duration: 2000
+        });
+      }, errorResponse => {
+        this._snackBar.open('Błąd podczas usuwania trunieju', 'OK', {
+          duration: 2000
+        });
+      }
+      );
+  }
+
 }
 

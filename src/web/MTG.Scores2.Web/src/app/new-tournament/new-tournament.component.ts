@@ -3,6 +3,7 @@ import { TournamentService } from '../shared/services/tournament.service';
 import { ITournament } from '../shared/models/tournament';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-tournament',
@@ -26,9 +27,11 @@ export class NewTournamentComponent implements OnInit {
   save() {
     if (this.tournamentForm.valid) {
       const tournament = this.tournamentForm.value as ITournament;
-      this.tournamentService.addTournament(tournament);
-
-      this.router.navigate(['/tournaments']);
+      this.tournamentService.addTournament(tournament)
+      .subscribe((createdTournament: ITournament) => {
+        console.log('dodano turniej');
+        this.router.navigate(['/tournaments']);
+      }, (errorResponse: HttpErrorResponse) => console.error('Błąd podczas dodawania turnieju'));
     }
   }
 
