@@ -4,6 +4,9 @@ import { ITournament } from '../shared/models/tournament';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-new-tournament',
@@ -15,7 +18,9 @@ export class NewTournamentComponent implements OnInit {
   constructor(
     private tournamentService: TournamentService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.tournamentForm = this.formBuilder.group({
@@ -25,13 +30,21 @@ export class NewTournamentComponent implements OnInit {
   }
 
   save() {
+    this.spinner.show();
     if (this.tournamentForm.valid) {
       const tournament = this.tournamentForm.value as ITournament;
       this.tournamentService.addTournament(tournament)
+      .pipe(finalize(() => {
+        this.spinner.hide();
+      }))
       .subscribe((createdTournament: ITournament) => {
         console.log('dodano turniej');
         this.router.navigate(['/tournaments']);
-      }, (errorResponse: HttpErrorResponse) => console.error('Błąd podczas dodawania turnieju'));
+      }, (errorResponse: HttpErrorResponse) => {
+        this.snackBar.open('Wystąpił błąd podczas dodawania trunieju', 'OK', {
+          duration: 2000
+        });
+      });
     }
   }
 

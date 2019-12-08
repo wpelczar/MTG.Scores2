@@ -1,4 +1,6 @@
 <div class="tournament-form">
+  <ngx-spinner></ngx-spinner>
+
   <form [formGroup]="tournamentForm" (ngSubmit)="save()">
     <div>
       <h2 class="heading">Informacje ogólne</h2>
@@ -6,10 +8,11 @@
         <input matInput placeholder="Nazwa" formControlName="name">
       </mat-form-field>
       <h2 class="heading">Uczestnicy</h2>
-      <div formArrayName="participants" *ngFor="let participantControl of tournamentForm.get('participants')['controls']; let i = index">
+      <div formArrayName="participants"
+        *ngFor="let participantControl of tournamentForm.get('participants')['controls']; let i = index">
         <div [formGroupName]="i">
           <div class="form-group">
-            <div >
+            <div>
               <mat-form-field>
                 <input matInput type="text" placeholder="Uczestnik {{i+1}}" formControlName="name">
               </mat-form-field>
@@ -22,8 +25,8 @@
 
       </div>
       <button type="button" mat-button (click)="addParticipant()">
-          Dodaj kolejnego uczestnika
-        </button>
+        Dodaj kolejnego uczestnika
+      </button>
     </div>
     <div class="submit-group">
       <button [disabled]="!tournamentForm.valid" mat-raised-button color="primary" type="submit">Zapisz turniej</button>

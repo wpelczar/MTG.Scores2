@@ -23,6 +23,7 @@ import { ParticipantsComponent } from './participants/participants.component';
 import { AccountModule } from './account/account.module';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
       { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
       { path: 'tournaments', component: TournamentsComponent, data: { title: 'Turnieje' } },
       { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' }, canActivate: [AuthGuard] },
-      { path: 'tournament-details/:id', component: TournamentDetailsComponent} ,
+      { path: 'tournament-details/:id', component: TournamentDetailsComponent },
       { path: '**', redirectTo: 'ranking' }
     ]),
     BrowserModule,
@@ -52,7 +53,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
     AccountModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxSpinnerModule
   ],
   providers: [
     RankingService,
