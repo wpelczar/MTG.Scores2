@@ -28,7 +28,7 @@ export class TournamentsComponent implements OnInit {
     private _dialog: MatDialog,
     private authService: AuthService,
     private _snackBar: MatSnackBar,
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.tournamentsDataSource = new TournamentDataSource(this._tournamentService, this._snackBar);
@@ -98,15 +98,20 @@ export class TournamentDataSource extends DataSource<ITournament> {
     this.loadingSubject.next(true);
 
     this._tournamentService.getTournaments().pipe(
-      catchError(() => of([])),
+      catchError(() => {
+        this._snackBar.open('Błąd podczas ładowania listy turniejów', 'OK', {
+          duration: 5000
+        });
+        return of([]);
+      }),
       finalize(() => this.loadingSubject.next(false))
     )
-    .subscribe(tournaments => this.tournamentsSubject.next(tournaments))
+      .subscribe(tournaments => this.tournamentsSubject.next(tournaments));
   }
 
   deleteTournament(id: number): void {
     this._tournamentService.delete(id)
-    .subscribe(response => {
+      .subscribe(response => {
         const newData = this.tournamentsSubject.value.filter(m => m.id !== id);
         this.tournamentsSubject.next(newData);
         this._snackBar.open('Turniej usunięty', 'OK', {
@@ -114,7 +119,7 @@ export class TournamentDataSource extends DataSource<ITournament> {
         });
       }, errorResponse => {
         this._snackBar.open('Błąd podczas usuwania trunieju', 'OK', {
-          duration: 2000
+          duration: 5000
         });
       }
       );
