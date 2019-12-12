@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
 import { ITournament } from '../shared/models/tournament';
 import { DataSource } from '@angular/cdk/table';
 import { TournamentService } from '../shared/services/tournament.service';
-import { map, merge, catchError, finalize } from 'rxjs/operators';
+import { map, merge, catchError, finalize, tap } from 'rxjs/operators';
 import { IDeleteConfirmationDialogData } from '../shared/models/delete-confirmation-dialog-data';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -110,19 +110,26 @@ export class TournamentDataSource extends DataSource<ITournament> {
   }
 
   deleteTournament(id: number): void {
+    this.loadingSubject.next(true);
+
     this._tournamentService.delete(id)
-      .subscribe(response => {
-        const newData = this.tournamentsSubject.value.filter(m => m.id !== id);
-        this.tournamentsSubject.next(newData);
-        this._snackBar.open('Turniej usunięty', 'OK', {
-          duration: 2000
-        });
-      }, errorResponse => {
-        this._snackBar.open('Błąd podczas usuwania trunieju', 'OK', {
-          duration: 5000
-        });
-      }
-      );
+      .pipe(
+        tap(() => {
+          const newData = this.tournamentsSubject.value.filter(m => m.id !== id);
+          this.tournamentsSubject.next(newData);
+          this._snackBar.open('Turniej usunięty', 'OK', {
+            duration: 2000
+          });
+        }),
+        catchError(() => {
+          this._snackBar.open('Błąd podczas usuwania trunieju', 'OK', {
+            duration: 5000
+          });
+          return of([]);
+        }),
+        finalize(() => this.loadingSubject.next(false))
+
+      ).subscribe();
   }
 
 }
