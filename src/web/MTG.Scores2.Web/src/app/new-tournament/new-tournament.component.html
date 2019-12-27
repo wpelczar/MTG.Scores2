@@ -30,6 +30,7 @@
     </div>
     <div class="submit-group">
       <button [disabled]="!tournamentForm.valid" mat-raised-button color="primary" type="submit">Zapisz turniej</button>
+      <button type="button" mat-raised-button [routerLink]="['/tournaments']">Anuluj</button>
     </div>
   </form>
 </div>
