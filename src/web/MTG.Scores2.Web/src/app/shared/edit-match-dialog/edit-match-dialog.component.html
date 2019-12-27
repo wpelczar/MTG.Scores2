@@ -10,7 +10,7 @@
           <div class="panel-body">
             <div *ngIf="data.availablePlayers && data.availablePlayers.length">
               <mat-form-field>
-                <mat-select id="selectedPlayer1Id" formControlName="selectedPlayer1">
+                <mat-select id="selectedPlayer1Id" formControlName="selectedPlayer1" tabindex="1">
                   <mat-option *ngFor="let player of data.availablePlayers" [value]="player">{{player.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -18,7 +18,7 @@
             <div>
               <mat-form-field>
                 <input id="player1ScoreId" matInput type="number" min="0" max="2" placeholder="Wynik" formControlName="player1Score"
-                  tabindex="1">
+                  tabindex="2">
               </mat-form-field>
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="panel-body">
             <div *ngIf="data.availablePlayers && data.availablePlayers.length">
               <mat-form-field>
-                <mat-select id="selectedPlayer2Id" formControlName="selectedPlayer2">
+                <mat-select id="selectedPlayer2Id" formControlName="selectedPlayer2" tabindex="3">
                   <mat-option *ngFor="let player of data.availablePlayers" [value]="player">{{player.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -40,7 +40,7 @@
             <div>
               <mat-form-field>
                 <input id="player2ScoreId" matInput type="number" min="0" max="2" placeholder="Wynik" formControlName="player2Score"
-                  tabindex="2">
+                  tabindex="4">
               </mat-form-field>
             </div>
           </div>
@@ -65,7 +65,7 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button type="button" mat-raised-button (click)="onNoClick()" tabindex="-1">Anuluj</button>
-    <button mat-raised-button color="primary" type="submit" tabindex="3">Zapisz</button>
+    <button mat-raised-button color="primary" type="submit" tabindex="5">Zapisz</button>
+    <button type="button" mat-raised-button (click)="onNoClick()" tabindex="6">Anuluj</button>
   </div>
 </form>

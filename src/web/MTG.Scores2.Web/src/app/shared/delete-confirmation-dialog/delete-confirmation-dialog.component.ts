@@ -3,7 +3,8 @@ import { Inject, Component } from '@angular/core';
 import { IDeleteConfirmationDialogData } from '../models/delete-confirmation-dialog-data';
 
 @Component({
-  templateUrl: 'delete-confirmation-dialog.component.html'
+  templateUrl: 'delete-confirmation-dialog.component.html',
+  styleUrls: ['delete-confirmation-dialog.component.scss']
 })
 export class DeleteConfirmationDialogComponent {
   constructor(
