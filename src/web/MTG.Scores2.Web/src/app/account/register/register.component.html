@@ -4,30 +4,29 @@
     <mat-card-header>
       <mat-card-title>Rejestracja</mat-card-title>
     </mat-card-header>
-    <form *ngIf="!success" #f="ngForm" (ngSubmit)="onSubmit()">
-
+    <form novalidate [formGroup]="registerForm" *ngIf="!success" (ngSubmit)="onSubmit()">
       <mat-card-content>
         <mat-form-field>
-          <input matInput type="text" placeholder="Twój login" id="name" name="name" [(ngModel)]="userRegistration.name"
-            required autoFocus>
+          <input matInput type="text" placeholder="Twój login" id="name" name="name" 
+          formControlName="name" autoFocus>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput type="email" placeholder="Adres email" id="email" name="email" #email="ngModel"
-            [(ngModel)]="userRegistration.email" email required>
-          <mat-error [hidden]="email.valid || (email.pristine && !submitted)">Niepoprawny email</mat-error>
+          <input matInput type="email" placeholder="Adres email" id="email" name="email" 
+          formControlName="email">
+          <mat-error [hidden]="registerForm.get('email').valid || (registerForm.get('email').pristine && !submitted)">Niepoprawny email</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <input matInput type="password" placeholder="Hasło" id="password" name="password"
-            [(ngModel)]="userRegistration.password" aria-describedby="passwordHelp" required>
-          <mat-hint>Min. 6 znaków, co najmniej 1 cyfra i 1 znak specjalny</mat-hint>
+            formControlName="password">
+          <mat-hint>Min. 6 znaków, małe i duże litery, co najmniej 1 cyfra i 1 znak specjalny</mat-hint>
         </mat-form-field>
       </mat-card-content>
 
       <mat-card-actions>
         <button mat-raised-button class="submit-btn" color="primary" type="submit"
-          [disabled]="!f.form.valid">Zatwierdź</button>
+        [disabled]="!registerForm.valid" >Zatwierdź</button>
       </mat-card-actions>
       <div *ngIf="error" class="alert alert-danger error-message" role="alert">
         <strong>Ups! Wystąpił błąd</strong>
