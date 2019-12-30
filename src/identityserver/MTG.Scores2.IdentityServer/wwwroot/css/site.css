@@ -1,16 +1,4 @@
-﻿body {
-  margin-top: 65px;
-}
-.navbar-header {
-  position: relative;
-  top: -4px;
-}
-.navbar-brand > .icon-banner {
-  position: relative;
-  top: -2px;
-  display: inline;
-}
-.icon {
+﻿.icon {
   position: relative;
   top: -10px;
 }
@@ -79,4 +67,10 @@
 }
 .grants .grant li:last-child:after {
   content: '';
+}
+.mdl-menu a:hover {
+  text-decoration: none;
+}
+.mdl-layout__header-row .mdl-button {
+  color: white;
 }

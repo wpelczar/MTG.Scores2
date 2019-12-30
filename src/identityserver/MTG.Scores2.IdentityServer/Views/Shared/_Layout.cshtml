@@ -1,61 +1,65 @@
 ﻿@using IdentityServer4.Extensions
 @{
-    string name = null;
-    if (!true.Equals(ViewData["signed-out"]))
-    {
-        name = Context.User?.GetDisplayName();
-    }
+  string name = null;
+  if (!true.Equals(ViewData["signed-out"]))
+  {
+    name = Context.User?.GetDisplayName();
+  }
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IdentityServer4</title>
-    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IdentityServer4</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+  <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+  <link rel="stylesheet" href="~/lib/material-design-lite/dist/material.indigo-pink.min.css" />
+  <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="~/">
-                    <span class="navbar-brand">
-                        <img src="~/icon.png" class="icon-banner">
-                        IdentityServer4
-                    </span>
-                </a>
-            </div>
 
-            @if (!string.IsNullOrWhiteSpace(name))
-            {
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@name <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-action="Logout" asp-controller="Account">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            }
+  <!-- Always shows a header, even in smaller screens. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <img class="logo-img" src="~/img/mtg_logo.png" alt="logo">
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        @if (!string.IsNullOrWhiteSpace(name))
+        {
+          <button id="menu-actions"
+                  class="mdl-button mdl-js-button">
+            @name
+          </button>
+
+          <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+              for="menu-actions">
+            <a asp-action="Logout" asp-controller="Account"><li class="mdl-menu__item">Logout</li></a>
+          </ul>
+        }
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div class="container body-content">
+          @RenderBody()
         </div>
-    </div>
+      </div>
+    </main>
+  </div>
 
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+  <div class="container body-content">
+    @RenderBody()
+  </div>
 
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    @RenderSection("scripts", required: false)
+  <script src="~/lib/jquery/jquery.js"></script>
+  <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+  <script src="~/lib/material-design-lite/material.min.js"></script>
+  @RenderSection("scripts", required: false)
 </body>
 </html>

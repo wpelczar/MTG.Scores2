@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "material-design-lite@1.3.0",
+      "destination": "wwwroot/lib/material-design-lite/",
+      "files": [
+        "dist/material.indigo-pink.min.css",
+        "material.min.js"
+      ]
+    }
+  ]
+}
