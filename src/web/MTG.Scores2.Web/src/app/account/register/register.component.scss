@@ -4,6 +4,10 @@
   margin: 50px 0 0 0;
 }
 
+.error-block{
+  color: #f44336;
+}
+
 mat-card {
   min-width: 300px;
   display: flex;
@@ -12,7 +16,7 @@ mat-card {
 }
 
 mat-form-field {
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 mat-card-content {

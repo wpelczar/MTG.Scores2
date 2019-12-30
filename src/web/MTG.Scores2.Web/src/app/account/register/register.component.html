@@ -14,7 +14,7 @@
         <mat-form-field>
           <input matInput type="email" placeholder="Adres email" id="email" name="email" 
           formControlName="email">
-          <mat-error [hidden]="registerForm.get('email').valid || (registerForm.get('email').pristine && !submitted)">Niepoprawny email</mat-error>
+          <mat-error>Niepoprawny email</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -22,22 +22,31 @@
             formControlName="password">
           <mat-hint>Min. 6 znaków, małe i duże litery, co najmniej 1 cyfra i 1 znak specjalny</mat-hint>
         </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="password" placeholder="Powtórz hasło" id="repeatedPassword" 
+          name="repeatedPassword" formControlName="repeatedPassword">
+        </mat-form-field>
+        <div class="error-block">
+          <div *ngIf="registerForm.errors?.passwordMatch && submitted">
+            Hasła nie pasują do siebie
+          </div>
+        </div>
+        
       </mat-card-content>
 
       <mat-card-actions>
         <button mat-raised-button class="submit-btn" color="primary" type="submit"
-        [disabled]="!registerForm.valid" >Zatwierdź</button>
+         >Zatwierdź</button>
       </mat-card-actions>
       <div *ngIf="error" class="alert alert-danger error-message" role="alert">
         <strong>Ups! Wystąpił błąd</strong>
       </div>
-
     </form>
 
     <div *ngIf="success" class="alert alert-success" role="alert">
       <h4 class="alert-heading">Świetnie!</h4>
       <p>Twoje konto zostało założone pomyślnie, <a routerLink="/login">Zaloguj się</a> aby kontynuować.</p>
     </div>
-
   </mat-card>
 </div>
