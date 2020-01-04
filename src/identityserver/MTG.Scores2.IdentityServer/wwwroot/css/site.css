@@ -74,3 +74,9 @@
 .mdl-layout__header-row .mdl-button {
   color: white;
 }
+.login-page .mdl-card {
+  width: 100%;
+}
+.login-page .external-providers-card {
+  min-height: 100px;
+}
