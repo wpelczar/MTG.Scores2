@@ -34,6 +34,7 @@ namespace IdentityServer4.Quickstart.UI
         // csp += "img-src 'self' https://pbs.twimg.com;";
         csp += "style-src 'self' https://fonts.googleapis.com;";
         csp += "font-src 'self' https://fonts.gstatic.com;";
+        csp += "img-src 'self' data:;";
 
 
         // once for standards compliant browsers
