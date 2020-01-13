@@ -61,4 +61,8 @@ export class NewTournamentComponent implements OnInit {
   removeParticipant(index: number) {
     (<FormArray>this.tournamentForm.get('participants')).removeAt(index);
   }
+
+  unsavedChanges(): boolean {
+    return this.tournamentForm.dirty;
+  }
 }

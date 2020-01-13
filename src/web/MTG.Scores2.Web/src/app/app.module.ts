@@ -24,6 +24,7 @@ import { AccountModule } from './account/account.module';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NewTournamentCanDeactivateGuard } from './new-tournament/new-tournament-can-deactivate.guard';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RouterModule.forRoot([
       { path: '', redirectTo: 'tournaments', pathMatch: 'full' },
       { path: 'tournaments', component: TournamentsComponent, data: { title: 'Turnieje' } },
-      { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' }, canActivate: [AuthGuard] },
+      { path: 'new-tournament', component: NewTournamentComponent, data: { title: 'Dodaj turniej' },
+        canActivate: [AuthGuard], canDeactivate: [NewTournamentCanDeactivateGuard] },
       { path: 'tournament-details/:id', component: TournamentDetailsComponent },
       { path: '**', redirectTo: 'ranking' }
     ]),
