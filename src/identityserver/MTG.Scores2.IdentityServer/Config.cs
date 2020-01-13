@@ -35,7 +35,7 @@ namespace MTG.Scores2.IdentityServer
         {
           ClientId = "spa",
           ClientName = "SPA Client",
-
+          RequireConsent = false,
           AllowedGrantTypes = GrantTypes.Code,
           RequirePkce = true,
           RequireClientSecret = false,
