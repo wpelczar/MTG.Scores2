@@ -25,7 +25,7 @@ namespace MTG.Scores2.Api
     {
       services.AddCors();
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
       services.AddAuthentication("Bearer")
         .AddJwtBearer("Bearer", options =>
