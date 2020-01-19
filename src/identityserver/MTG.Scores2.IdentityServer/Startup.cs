@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace MTG.Scores2.IdentityServer
@@ -15,9 +16,9 @@ namespace MTG.Scores2.IdentityServer
   public class Startup
   {
     public static IConfiguration Configuration { get; private set; }
-    public IHostingEnvironment Environment { get; }
+    public IWebHostEnvironment Environment { get; }
 
-    public Startup(IConfiguration configuration, IHostingEnvironment environment)
+    public Startup(IConfiguration configuration, IWebHostEnvironment environment)
     {
       Configuration = configuration;
       Environment = environment;
@@ -32,7 +33,21 @@ namespace MTG.Scores2.IdentityServer
           .AddEntityFrameworkStores<ApplicationDbContext>()
           .AddDefaultTokenProviders();
 
-      services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+      services.AddControllersWithViews();
+
+      // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
+      services.Configure<IISOptions>(iis =>
+      {
+        iis.AuthenticationDisplayName = "Windows";
+        iis.AutomaticAuthentication = false;
+      });
+
+      // configures IIS in-proc settings
+      services.Configure<IISServerOptions>(iis =>
+      {
+        iis.AuthenticationDisplayName = "Windows";
+        iis.AutomaticAuthentication = false;
+      });
 
       services.Configure<IISOptions>(iis =>
       {
@@ -61,7 +76,7 @@ namespace MTG.Scores2.IdentityServer
         throw new Exception("need to configure key material");
       }
 
-      services.AddAuthentication()
+      services.AddAuthentication()  
           .AddGoogle(options =>
           {
                   // register your IdentityServer with Google at https://console.developers.google.com
@@ -92,8 +107,14 @@ namespace MTG.Scores2.IdentityServer
       }
 
       app.UseStaticFiles();
+      app.UseRouting();
       app.UseIdentityServer();
-      app.UseMvcWithDefaultRoute();
+      app.UseAuthorization();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapDefaultControllerRoute();
+      });
     }
   }
 }

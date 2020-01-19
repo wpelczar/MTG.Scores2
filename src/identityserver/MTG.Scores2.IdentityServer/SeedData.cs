@@ -19,6 +19,8 @@ namespace MTG.Scores2.IdentityServer
     public static void EnsureSeedData(string connectionString)
     {
       var services = new ServiceCollection();
+      services.AddLogging();
+
       services.AddDbContext<ApplicationDbContext>(options =>
          options.UseSqlServer(connectionString));
 
