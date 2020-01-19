@@ -10,7 +10,7 @@ namespace MTG.Scores2.Api.Extensions
     {
       foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
       {
-        entity.Relational().TableName = entity.DisplayName();
+        entity.SetTableName(entity.DisplayName());
       }
     }
   }

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Middleware;
 using MTG.Scores2.Api.Services;
@@ -25,7 +25,7 @@ namespace MTG.Scores2.Api
     {
       services.AddCors();
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      services.AddControllers();
 
       services.AddAuthentication("Bearer")
         .AddJwtBearer("Bearer", options =>
@@ -54,7 +54,7 @@ namespace MTG.Scores2.Api
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(
       IApplicationBuilder app, 
-      IHostingEnvironment env, 
+      IWebHostEnvironment env, 
       MtgContext mtgContext, 
       MtgContextSeedData mtgContextSeedData)
     { 
@@ -82,8 +82,13 @@ namespace MTG.Scores2.Api
       }
 
       app.UseHttpsRedirection();
+      app.UseRouting();
+      app.UseAuthorization();
       app.UseMiddleware(typeof(ErrorHandlingMiddleware));
-      app.UseMvc();
+
+      app.UseEndpoints(endpoints =>
+        endpoints.MapControllers()
+      );
     }
   }
 }
