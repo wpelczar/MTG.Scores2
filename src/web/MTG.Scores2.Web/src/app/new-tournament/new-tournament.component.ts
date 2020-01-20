@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class NewTournamentComponent implements OnInit {
   tournamentForm: FormGroup;
+  saved: boolean;
   constructor(
     private tournamentService: TournamentService,
     private formBuilder: FormBuilder,
@@ -39,6 +40,7 @@ export class NewTournamentComponent implements OnInit {
       }))
       .subscribe((createdTournament: ITournament) => {
         console.log('dodano turniej');
+        this.saved = true;
         this.router.navigate(['/tournaments']);
       }, (errorResponse: HttpErrorResponse) => {
         this.snackBar.open('Wystąpił błąd podczas dodawania trunieju', 'OK', {
@@ -63,6 +65,6 @@ export class NewTournamentComponent implements OnInit {
   }
 
   unsavedChanges(): boolean {
-    return this.tournamentForm.dirty;
+    return this.tournamentForm.dirty && !this.saved;
   }
 }
