@@ -47,9 +47,9 @@ services:
         SpaClientUrl: "http://localhost"
         ConnectionStrings__IdentityServerDatabase: "Data Source=db;Initial Catalog=MtgScores2IdentityServer;User=sa;Password=Your_password123;"
         Certificates__Signing__Path: "/certs/token_signing.pfx"
-        Certificates__Signing__Password: "Pass123$"
+        Certificates__Signing__Password: "Pass123$$" # escape $ 
         Certificates__Validation__Path: "/certs/token_validation.pfx"
-        Certificates__Validation__Password: "Pass123$"
+        Certificates__Validation__Password: "Pass123$$" # escape $ 
     networks:
       - app-net
 
