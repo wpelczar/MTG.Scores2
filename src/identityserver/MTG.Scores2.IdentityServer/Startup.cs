@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using IdentityServer4.Stores;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MTG.Scores2.IdentityServer
 {
@@ -73,9 +75,15 @@ namespace MTG.Scores2.IdentityServer
       }
       else
       {
-        throw new Exception("need to configure key material");
-      }
+        string signingCertPath = Configuration["Certificates:Signing:Path"];
+        string signingCertPass = Configuration["Certificates:Signing:Password"];
+        string validationCertPath = Configuration["Certificates:Validation:Path"];
+        string validationCertPass = Configuration["Certificates:Validation:Password"];
 
+        builder.AddSigningCredential(new X509Certificate2(signingCertPath, signingCertPass));
+        builder.AddValidationKey(new X509Certificate2(validationCertPath, validationCertPass));
+      }
+ 
       services.AddAuthentication()  
           .AddGoogle(options =>
           {
@@ -85,7 +93,6 @@ namespace MTG.Scores2.IdentityServer
                   options.ClientId = "copy client ID from Google here";
             options.ClientSecret = "copy client secret from Google here";
           });
-
       services.AddCors(options => options.AddPolicy("RegistrerEndpointCorsPolicy", corsBuilder =>
       {
         corsBuilder.WithOrigins(Startup.Configuration["SpaClientUrl"]);

@@ -44,10 +44,12 @@ services:
     ports:
       - "5000:80"
     environment:
-        ASPNETCORE_ENVIRONMENT: "DEVELOPMENT"
         SpaClientUrl: "http://localhost"
         ConnectionStrings__IdentityServerDatabase: "Data Source=db;Initial Catalog=MtgScores2IdentityServer;User=sa;Password=Your_password123;"
-
+        Certificates__Signing__Path: "/certs/token_signing.pfx"
+        Certificates__Signing__Password: "Pass123$"
+        Certificates__Validation__Path: "/certs/token_validation.pfx"
+        Certificates__Validation__Password: "Pass123$"
     networks:
       - app-net
 
