@@ -10,7 +10,6 @@ docker-compose*
 **/obj
 **/node_modules
 **/bower_components
-**/dist
 README.md
 LICENSE
 .vscode
