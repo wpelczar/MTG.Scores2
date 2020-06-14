@@ -56,10 +56,10 @@ namespace MTG.Scores2.Api.Controllers
       _matchRepository.Add(match);
       await _matchRepository.SaveAllAsync();
 
-      var newUri = Url.Link("MatchGet", new { id = match.ID });
+      var newUri = Url.Link("MatchGet", new { tournamentId = tournamentId, id = match.ID });
       matchModel.ID = match.ID;
 
-      _logger.LogInformation($"Match created. ID = {match.ID}");
+      _logger.LogInformation($"Match created. ID = {match.ID}, tournamentId = {tournamentId}");
       return Created(newUri, matchModel);
     }
 
