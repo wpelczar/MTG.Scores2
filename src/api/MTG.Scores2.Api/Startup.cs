@@ -1,13 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using MTG.Scores2.Api.DataAccess;
 using MTG.Scores2.Api.Middleware;
 using MTG.Scores2.Api.Services;
+using System;
+using System.Threading;
 
 namespace MTG.Scores2.Api
 {
@@ -56,10 +60,10 @@ namespace MTG.Scores2.Api
       IApplicationBuilder app, 
       IWebHostEnvironment env, 
       MtgContext mtgContext, 
-      MtgContextSeedData mtgContextSeedData)
-    { 
-      mtgContext.Database.Migrate();
-      mtgContextSeedData.Seed().Wait();
+      MtgContextSeedData mtgContextSeedData,
+      ILogger<Startup> logger)
+    {
+      MigrateDatabase(mtgContext, mtgContextSeedData, logger);
 
       app.UseCors(
         builder =>
@@ -89,6 +93,34 @@ namespace MTG.Scores2.Api
       app.UseEndpoints(endpoints =>
         endpoints.MapControllers()
       );
+    }
+
+    private void MigrateDatabase(MtgContext mtgContext, MtgContextSeedData mtgContextSeedData, ILogger<Startup> logger)
+    {
+      var retryCount = 5;
+      var success = false;
+
+      while (!success)
+      {
+        try
+        {
+          mtgContext.Database.Migrate();
+          mtgContextSeedData.Seed().Wait();
+          success = true;
+        }
+        catch (SqlException ex)
+        {
+          logger.LogWarning($"Excepiton occured when migrating database {ex.Message}. Retries left: {retryCount}");
+
+          Thread.Sleep(5000);
+
+          if (retryCount-- <= 0)
+          {
+            throw;
+          }
+        }
+      }
+      
     }
   }
 }
